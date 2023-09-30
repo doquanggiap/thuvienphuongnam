@@ -15,6 +15,7 @@ public class quanlysanpham extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,4 +43,6 @@ public class quanlysanpham extends AppCompatActivity {
 //            }
 //        });
 //    }
+
+
 }

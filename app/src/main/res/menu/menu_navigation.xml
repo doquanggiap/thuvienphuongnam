@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/qlsp"
-        android:title="Quản lý sản phẩm"
-        android:icon="@drawable/ic_qlsp"
-        />
-    <item android:id="@+id/gioithieu"
-        android:title="Giới thiệu"
-        android:icon="@drawable/baseline_all_inclusive_24"
-        />
-    <item android:title="Khác">
-        <menu>
-            <item android:id="@+id/caidat"
-                android:title="Cài đặt"
-                android:icon="@drawable/setting"/>
-            <item android:id="@+id/dangxuat"
-                android:title="Đăng xuất"
-                android:icon="@drawable/baseline_exit_to_app_24"/>
-        </menu>
-    </item>
+<!--    <item android:id="@+id/qlsp"-->
+<!--        android:title="Quản lý sản phẩm"-->
+<!--        android:icon="@drawable/ic_qlsp"-->
+<!--        />-->
+<!--    <item android:id="@+id/gioithieu"-->
+<!--        android:title="Giới thiệu"-->
+<!--        android:icon="@drawable/baseline_all_inclusive_24"-->
+<!--        />-->
+<!--    <item android:title="Khác">-->
+<!--        <menu>-->
+<!--            <item android:id="@+id/caidat"-->
+<!--                android:title="Cài đặt"-->
+<!--                android:icon="@drawable/setting"/>-->
+<!--            <item android:id="@+id/dangxuat"-->
+<!--                android:title="Đăng xuất"-->
+<!--                android:icon="@drawable/baseline_exit_to_app_24"/>-->
+<!--        </menu>-->
+<!--    </item>-->
 
 </menu>
