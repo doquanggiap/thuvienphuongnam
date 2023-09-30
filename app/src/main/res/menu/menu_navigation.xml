@@ -1,22 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<!--    <item android:id="@+id/qlsp"-->
-<!--        android:title="Quản lý sản phẩm"-->
-<!--        android:icon="@drawable/ic_qlsp"-->
-<!--        />-->
-<!--    <item android:id="@+id/gioithieu"-->
-<!--        android:title="Giới thiệu"-->
-<!--        android:icon="@drawable/baseline_all_inclusive_24"-->
-<!--        />-->
-<!--    <item android:title="Khác">-->
-<!--        <menu>-->
-<!--            <item android:id="@+id/caidat"-->
-<!--                android:title="Cài đặt"-->
-<!--                android:icon="@drawable/setting"/>-->
-<!--            <item android:id="@+id/dangxuat"-->
-<!--                android:title="Đăng xuất"-->
-<!--                android:icon="@drawable/baseline_exit_to_app_24"/>-->
-<!--        </menu>-->
-<!--    </item>-->
+    <item android:id="@+id/qlsp"
+        android:title="Quản lý sản phẩm"
+        android:icon="@drawable/home"
+        />
+    <item android:id="@+id/qlls"
+        android:title="Quản lý loại sách"
+        android:icon="@drawable/list"
+        />
+    <item android:id="@+id/qls"
+        android:title="Quản lý sách"
+        android:icon="@drawable/book"
+        />
+    <item android:id="@+id/qltv"
+        android:title="Quản lý thành viên"
+        android:icon="@drawable/baseline_people_24"
+        />
+    <item android:title="Thống kê">
+        <menu>
+            <item android:id="@+id/topten"
+                android:title="10 sách mượn nhiều nhất"
+                android:icon="@drawable/baseline_airline_stops_24"/>
+            <item android:id="@+id/doanhthu"
+                android:title="Doanh thu"
+                android:icon="@drawable/baseline_attach_money_24"/>
+        </menu>
+    </item>
+    <item android:title="Người dùng">
+        <menu>
+            <item android:id="@+id/themThanhVien"
+                android:title="Thêm thành viên"
+                android:icon="@drawable/baseline_add_24"/>
+            <item android:id="@+id/doiMatKhau"
+                android:title="Đổi mật khẩu"
+                android:icon="@drawable/baseline_vpn_key_24"/>
+            <item android:id="@+id/dangxuat"
+                android:title="Đăng xuất"
+                android:icon="@drawable/baseline_logout_24"/>
+        </menu>
+    </item>
 
 </menu>

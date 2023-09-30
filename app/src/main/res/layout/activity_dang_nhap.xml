@@ -51,6 +51,7 @@
             android:textSize="18sp" />
 
         <EditText
+            android:id="@+id/txtPass"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="4dp"
@@ -72,6 +73,7 @@
             android:layout_marginTop="16dp"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/btnDangnhap"
                 android:layout_width="140dp"
                 android:layout_height="50dp"
                 android:text="Đăng nhập"
@@ -82,6 +84,7 @@
                 android:layout_marginRight="50dp"
                 />
             <Button
+                android:id="@+id/btnHuy"
                 android:layout_width="140dp"
                 android:layout_height="50dp"
                 android:textAllCaps="false"
