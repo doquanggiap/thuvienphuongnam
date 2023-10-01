@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/qlsp"
-        android:title="Quản lý sản phẩm"
+    <item android:id="@+id/qlpm"
+        android:title="Quản lý phiếu mượn"
         android:icon="@drawable/home"
         />
     <item android:id="@+id/qlls"

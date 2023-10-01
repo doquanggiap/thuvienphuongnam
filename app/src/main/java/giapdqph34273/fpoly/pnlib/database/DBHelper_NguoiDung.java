@@ -4,13 +4,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
-public class DB_Helper_NguoiDung extends SQLiteOpenHelper {
+public class DBHelper_NguoiDung extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "nguoidungdb.db";
     private static final int DATABASE_VERSION = 2;
 
-    public DB_Helper_NguoiDung(Context context) {
+    public DBHelper_NguoiDung(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -19,8 +17,11 @@ public class DB_Helper_NguoiDung extends SQLiteOpenHelper {
         String createTable = "CREATE TABLE user(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "TENDANGNHAP TEXT," +
                 "HOTEN TEXT," +
-                "MATKHAU)";
+                "MATKHAU TEXT)";
         db.execSQL(createTable);// truy vấn
+        String dsnd = "INSERT INTO user (TENDANGNHAP, HOTEN, MATKHAU) VALUES" +
+                "('admin','Đỗ Quang Giáp','admin')";
+        db.execSQL(dsnd);
 
     }
 
