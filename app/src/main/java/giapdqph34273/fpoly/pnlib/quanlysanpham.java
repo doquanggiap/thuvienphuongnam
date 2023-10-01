@@ -13,12 +13,19 @@ import android.widget.ImageButton;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+
+import giapdqph34273.fpoly.pnlib.DAO.PhieuMuonDAO;
+import giapdqph34273.fpoly.pnlib.model.PhieuMuon;
+
 public class quanlysanpham extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     RecyclerView recyclerView;
     ImageButton btnThem;
     DrawerLayout drawerLayout;
+    PhieuMuonDAO phieuMuonDAO;
+    ArrayList<PhieuMuon> list;
 
 
     @Override
@@ -32,6 +39,11 @@ public class quanlysanpham extends AppCompatActivity {
         toolbar = findViewById(R.id.my_toolbar);
         navigationView = findViewById(R.id.navigationView);
         setUpToolbar();
+
+        phieuMuonDAO = new PhieuMuonDAO(this);
+        list = phieuMuonDAO.getAllSanPham();
+
+
     }
 
     private void setUpToolbar() {
