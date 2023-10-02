@@ -18,7 +18,7 @@ public class PhieuMuonDAO {
     public PhieuMuonDAO(Context context) {
         db_pm = new DBHelper_PhieuMuon(context);
     }
-    public ArrayList<PhieuMuon> getAllSanPham() {
+    public ArrayList<PhieuMuon> getAllPhieuMuon() {
         ArrayList<PhieuMuon> list = new ArrayList<>();
         database = db_pm.getReadableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM PM", null);

@@ -41,7 +41,7 @@ public class quanlysanpham extends AppCompatActivity {
         setUpToolbar();
 
         phieuMuonDAO = new PhieuMuonDAO(this);
-        list = phieuMuonDAO.getAllSanPham();
+        list = phieuMuonDAO.getAllPhieuMuon();
 
 
     }

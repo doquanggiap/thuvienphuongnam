@@ -21,10 +21,10 @@ public class DBHelper_PhieuMuon extends SQLiteOpenHelper {
                 "TENSACH TEXT," +
                 "TIENTHUE INTEGER," +
                 "NGAYTHUE TEXT," +
-                "TRANGTHAI BOOLEAN)";
+                "TRANGTHAI INTEGER)";
         db.execSQL(createTable);
-        String pms = "INSERT INTO PM (TENSP, GIABAN, SOLUONG) VALUES" +
-                "('Đỗ Quang Giáp','Java 1',10000,'01-10-2023',true)";
+        String pms = "INSERT INTO PM (TENTV, TENSACH, TIENTHUE,NGAYTHUE,TRANGTHAI) VALUES" +
+                "('Đỗ Quang Giáp','Java 1',10000,'01-10-2023',1)";
         db.execSQL(pms);
     }
 
