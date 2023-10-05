@@ -41,7 +41,7 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
     @Override
     public PhieuMuonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        View view = inflater.inflate(R.layout.item_recyclerview, parent, false);
+        View view = inflater.inflate(R.layout.item_phieumuon, parent, false);
         return new PhieuMuonViewHolder(view);
     }
 
@@ -105,7 +105,7 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
     public void updateDialog(PhieuMuon phieuMuon) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        View view = inflater.inflate(R.layout.item_update, null);
+        View view = inflater.inflate(R.layout.item_update_phieumuon, null);
         builder.setView(view);
         Dialog dialog = builder.create();
         dialog.show();

@@ -76,7 +76,7 @@ public class quanlyphieumuon extends AppCompatActivity {
 
     public void dialog_them() {
         AlertDialog.Builder builder = new AlertDialog.Builder(quanlyphieumuon.this);
-        View view = getLayoutInflater().inflate(R.layout.item_add, null);
+        View view = getLayoutInflater().inflate(R.layout.item_add_phieumuon, null);
         builder.setView(view);
         Dialog dialog = builder.create();
         dialog.show();
@@ -160,7 +160,8 @@ public class quanlyphieumuon extends AppCompatActivity {
                     Intent intent = new Intent(quanlyphieumuon.this, quanlyloaisach.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.qls) {
-
+                    Intent intent = new Intent(quanlyphieumuon.this, quanlysach.class);
+                    startActivity(intent);
                 } else if (item.getItemId() == R.id.qltv) {
 
                 } else if (item.getItemId() == R.id.topten) {
