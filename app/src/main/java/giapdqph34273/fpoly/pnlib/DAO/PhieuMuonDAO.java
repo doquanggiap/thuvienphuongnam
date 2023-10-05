@@ -43,7 +43,7 @@ public class PhieuMuonDAO {
         values.put("TIENTHUE", pm.getTienThue());
         values.put("NGAYTHUE", pm.getNgayThue());
         values.put("TRANGTHAI", pm.getTrangThaiMuon());
-        return database.insert("sanpham", null, values);
+        return database.insert("PM", null, values);
     }
     public long deletePM(int id) {
         database = db_pm.getWritableDatabase();

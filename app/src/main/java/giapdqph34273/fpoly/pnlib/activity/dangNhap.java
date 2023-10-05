@@ -1,4 +1,4 @@
-package giapdqph34273.fpoly.pnlib;
+package giapdqph34273.fpoly.pnlib.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import giapdqph34273.fpoly.pnlib.DAO.NguoiDungDao;
+import giapdqph34273.fpoly.pnlib.R;
 
 public class dangNhap extends AppCompatActivity {
     EditText txtUser, txtPass;
@@ -40,7 +41,7 @@ public class dangNhap extends AppCompatActivity {
                 }
                 if (nguoiDungDao.checkUser(user,pass)){
                     Toast.makeText(dangNhap.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(dangNhap.this, quanlysanpham.class);
+                    Intent intent = new Intent(dangNhap.this, quanlyphieumuon.class);
                     startActivity(intent);
                 }else {
                     Toast.makeText(dangNhap.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();

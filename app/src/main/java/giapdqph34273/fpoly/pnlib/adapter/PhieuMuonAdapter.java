@@ -51,11 +51,13 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
         holder.txtTenTV.setText(phieuMuon.getTenTV());
         holder.txtNgay.setText(phieuMuon.getNgayThue());
         holder.txtTenSach.setText(phieuMuon.getTenSach());
-        holder.txtTienThue.setText(phieuMuon.getTienThue());
+        holder.txtTienThue.setText(String.valueOf(phieuMuon.getTienThue()));
         if (phieuMuon.getTrangThaiMuon()==1){
             holder.txtTrangThai.setText("Đã trả sách");
+            holder.txtTrangThai.setTextColor(Color.parseColor("#1D0FC6"));
         }else{
             holder.txtTrangThai.setText("Chưa trả sách");
+            holder.txtTrangThai.setTextColor(Color.parseColor("#ED0C0C"));
         }
 
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +66,7 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setIcon(R.drawable.baseline_question_mark_24);
                 builder.setCancelable(false);
-                builder.setTitle("Xóa phiêus mượn");
+                builder.setTitle("Xóa phiếu mượn");
                 builder.setMessage("Bạn có muốn xóa không ?");
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -125,7 +127,7 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
         edtTenTV.setText(phieuMuon.getTenTV());
         edtTenSach.setText(phieuMuon.getTenSach());
         txtNgayThue.setText(phieuMuon.getNgayThue());
-        txtTienThue.setText(phieuMuon.getTienThue());
+        txtTienThue.setText(String.valueOf(phieuMuon.getTienThue()));
         if (phieuMuon.getTrangThaiMuon() == 1) {
             chkTrangThai.setChecked(true);
         } else {
@@ -160,6 +162,12 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
                 }else{
                     Toast.makeText(context, "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
     }

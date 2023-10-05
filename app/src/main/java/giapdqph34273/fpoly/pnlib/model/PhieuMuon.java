@@ -16,6 +16,9 @@ public class PhieuMuon {
         this.trangThaiMuon = trangThaiMuon;
     }
 
+    public PhieuMuon() {
+    }
+
     public int getId() {
         return id;
     }
