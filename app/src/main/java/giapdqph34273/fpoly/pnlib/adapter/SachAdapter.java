@@ -2,11 +2,16 @@ package giapdqph34273.fpoly.pnlib.adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +42,7 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder
     @Override
     public SachViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        View view = inflater.inflate(R.layout.item_loaisach, parent, false);
+        View view = inflater.inflate(R.layout.item_sach, parent, false);
         return new SachAdapter.SachViewHolder(view);
     }
 
@@ -45,8 +50,8 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder
     public void onBindViewHolder(@NonNull SachViewHolder holder, int position) {
         Sach sach = list.get(position);
         holder.txtTenSach.setText(sach.getTenSach());
-        holder.txtTienThue.setText(sach.getTienThue());
-        holder.txtLoaiSach.setText(String.valueOf(sach.getLoaiSach()));
+        holder.txtTienThue.setText(String.valueOf(sach.getTienThue()));
+        holder.txtLoaiSach.setText(sach.getLoaiSach());
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +93,66 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder
     }
 
     private void updateDialog(Sach sach) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+        View view = inflater.inflate(R.layout.item_update_sach, null);
+        builder.setView(view);
+        builder.setCancelable(false);
+        Dialog dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        EditText edtTenSach,edtTienThue,edtTenLoai;
+        Button btnSua, btnHuy;
+
+        edtTenSach = view.findViewById(R.id.edtTenSach);
+        edtTienThue = view.findViewById(R.id.edtTienThue);
+        edtTenLoai = view.findViewById(R.id.edtTenLoai);
+        btnSua = view.findViewById(R.id.btnSua);
+        btnHuy = view.findViewById(R.id.btnHuy);
+
+        edtTenSach.setText(sach.getTenSach());
+        edtTienThue.setText(String.valueOf(sach.getTienThue()));
+        edtTenLoai.setText(sach.getLoaiSach());
+
+        btnSua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tensach = edtTenSach.getText().toString();
+                String tienthue = edtTienThue.getText().toString();
+                String tenloai = edtTenLoai.getText().toString();
+
+                if (tensach.isEmpty()||tienthue.isEmpty()||tenloai.isEmpty()){
+                    Toast.makeText(context, "Không được để trống", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!tienthue.matches("\\d+")){
+                    Toast.makeText(context, "Tiền thuê phải là sô", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                sach.setTenSach(tensach);
+                sach.setTienThue(Integer.parseInt(tienthue));
+                sach.setLoaiSach(tenloai);
+
+                if (sachDAO.updateS(sach)>0){
+                    list.clear();
+                    list.addAll(sachDAO.getAllSach());
+                    notifyDataSetChanged();
+                    dialog.dismiss();
+                    Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
     }
 

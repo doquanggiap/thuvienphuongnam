@@ -93,6 +93,7 @@ public class LoaiSachAdapter extends RecyclerView.Adapter<LoaiSachAdapter.LoaiSa
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View view = inflater.inflate(R.layout.item_update_loaisach, null);
         builder.setView(view);
+        builder.setCancelable(false);
         Dialog dialog = builder.create();
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

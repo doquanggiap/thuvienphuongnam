@@ -78,19 +78,18 @@ public class quanlyphieumuon extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(quanlyphieumuon.this);
         View view = getLayoutInflater().inflate(R.layout.item_add_phieumuon, null);
         builder.setView(view);
+        builder.setCancelable(false);
         Dialog dialog = builder.create();
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         EditText edtTenTV, edtTenSach, edtTienThue;
-        TextView txtNgayThue;
         CheckBox chkTrangThai;
         Button btnAdd, btnHuy;
 
         edtTenTV = view.findViewById(R.id.edtTenTV);
         edtTenSach = view.findViewById(R.id.edtTenSach);
         edtTienThue = view.findViewById(R.id.edtTienThue);
-        txtNgayThue = view.findViewById(R.id.txtNgayThue);
         chkTrangThai = view.findViewById(R.id.chkTrangThai);
         btnAdd = view.findViewById(R.id.btnAdd);
         btnHuy = view.findViewById(R.id.btnHuy);

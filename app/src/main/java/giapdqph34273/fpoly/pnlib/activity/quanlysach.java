@@ -1,16 +1,25 @@
 package giapdqph34273.fpoly.pnlib.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -18,6 +27,7 @@ import java.util.ArrayList;
 
 import giapdqph34273.fpoly.pnlib.DAO.SachDAO;
 import giapdqph34273.fpoly.pnlib.R;
+import giapdqph34273.fpoly.pnlib.adapter.SachAdapter;
 import giapdqph34273.fpoly.pnlib.model.LoaiSach;
 import giapdqph34273.fpoly.pnlib.model.Sach;
 
@@ -29,6 +39,7 @@ public class quanlysach extends AppCompatActivity {
     private NavigationView navigationView;
     private SachDAO sachDAO;
     private ArrayList<Sach> list;
+    private SachAdapter sachAdapter;
 
 
     @Override
@@ -41,8 +52,73 @@ public class quanlysach extends AppCompatActivity {
 
         sachDAO = new SachDAO(this);
         list = sachDAO.getAllSach();
+        sachAdapter = new SachAdapter(this,list);
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(sachAdapter);
+        btnThem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogThem();
+            }
+        });
 
+    }
+
+    private void dialogThem() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(quanlysach.this);
+        View view = getLayoutInflater().inflate(R.layout.item_add_sach, null);
+        builder.setView(view);
+        builder.setCancelable(false);
+        Dialog dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        EditText edtTenSach,edtTienThue,edtTenLoai;
+        Button btnAdd, btnHuy;
+
+        edtTenSach = view.findViewById(R.id.edtTenSach);
+        edtTienThue = view.findViewById(R.id.edtTienThue);
+        edtTenLoai = view.findViewById(R.id.edtTenLoai);
+        btnAdd = view.findViewById(R.id.btnAdd);
+        btnHuy = view.findViewById(R.id.btnHuy);
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tensach = edtTenSach.getText().toString();
+                String tienthue = edtTienThue.getText().toString();
+                String tenloai = edtTenLoai.getText().toString();
+
+                if (tensach.isEmpty()||tienthue.isEmpty()||tenloai.isEmpty()){
+                    Toast.makeText(quanlysach.this, "Không được để trống", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!tienthue.matches("\\d+")){
+                    Toast.makeText(quanlysach.this, "Tiền thuê phải là sô", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Sach sach = new Sach(tensach,Integer.parseInt(tienthue),tenloai);
+
+                if (sachDAO.addS(sach) > 0) {
+                    Toast.makeText(quanlysach.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    list.clear();
+                    list.addAll(sachDAO.getAllSach());
+                    sachAdapter.notifyDataSetChanged();
+                    dialog.dismiss();
+                }else {
+                    Toast.makeText(quanlysach.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
     private void anhxa() {
