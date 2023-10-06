@@ -16,15 +16,18 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
+import giapdqph34273.fpoly.pnlib.DAO.LoaiSachDAO;
 import giapdqph34273.fpoly.pnlib.DAO.SachDAO;
 import giapdqph34273.fpoly.pnlib.R;
 import giapdqph34273.fpoly.pnlib.adapter.SachAdapter;
@@ -75,8 +78,9 @@ public class quanlysach extends AppCompatActivity {
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText edtTenSach,edtTienThue,edtTenLoai;
+        EditText edtTenSach,edtTienThue;
         Button btnAdd, btnHuy;
+        Spinner edtTenLoai;
 
         edtTenSach = view.findViewById(R.id.edtTenSach);
         edtTienThue = view.findViewById(R.id.edtTienThue);
@@ -84,12 +88,21 @@ public class quanlysach extends AppCompatActivity {
         btnAdd = view.findViewById(R.id.btnAdd);
         btnHuy = view.findViewById(R.id.btnHuy);
 
+        ArrayList<String> tenLoaiSachList = getTenLoaiSachList();
+        ArrayAdapter<String> spinnerLoaiSach = new ArrayAdapter<>(
+                quanlysach.this,
+                android.R.layout.simple_spinner_item,
+                tenLoaiSachList
+                );
+        spinnerLoaiSach.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        edtTenLoai.setAdapter(spinnerLoaiSach);
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String tensach = edtTenSach.getText().toString();
                 String tienthue = edtTienThue.getText().toString();
-                String tenloai = edtTenLoai.getText().toString();
+                String tenloai = edtTenLoai.getSelectedItem().toString();
 
                 if (tensach.isEmpty()||tienthue.isEmpty()||tenloai.isEmpty()){
                     Toast.makeText(quanlysach.this, "Không được để trống", Toast.LENGTH_SHORT).show();
@@ -121,6 +134,17 @@ public class quanlysach extends AppCompatActivity {
         });
     }
 
+    private ArrayList<String> getTenLoaiSachList() {
+        LoaiSachDAO loaiSachDAO = new LoaiSachDAO(getApplicationContext());
+        ArrayList<LoaiSach> list1 = loaiSachDAO.getAllLoaiSach();
+        ArrayList<String> tenLoaiSachList = new ArrayList<>();
+
+        for (LoaiSach loaiSach: list1){
+            tenLoaiSachList.add(loaiSach.getTenLoai());
+        }
+        return tenLoaiSachList;
+    }
+
     private void anhxa() {
         recyclerView = findViewById(R.id.recycleView);
         btnThem = findViewById(R.id.btnThem);
@@ -133,6 +157,7 @@ public class quanlysach extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu_icon);
         getSupportActionBar().setTitle("Quản lý sách");
+        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

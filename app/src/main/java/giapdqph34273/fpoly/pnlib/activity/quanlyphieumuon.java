@@ -70,8 +70,6 @@ public class quanlyphieumuon extends AppCompatActivity {
                 dialog_them();
             }
         });
-
-
     }
 
     public void dialog_them() {
@@ -109,8 +107,8 @@ public class quanlyphieumuon extends AppCompatActivity {
                     Toast.makeText(quanlyphieumuon.this, "Tiền thuê phải là số", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                String ngay = String.valueOf(LocalDate.now()); // lấy ngày hiện tại
 
+                String ngay = String.valueOf(LocalDate.now()); // lấy ngày hiện tại
 
 
                 PhieuMuon pm = new PhieuMuon();
@@ -150,6 +148,7 @@ public class quanlyphieumuon extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu_icon);
         getSupportActionBar().setTitle("Quản lý phiếu mượn");
+        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

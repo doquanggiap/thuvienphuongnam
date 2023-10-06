@@ -119,6 +119,8 @@ public class quanlyloaisach extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu_icon);
         getSupportActionBar().setTitle("Quản lý loại sách");
+        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
