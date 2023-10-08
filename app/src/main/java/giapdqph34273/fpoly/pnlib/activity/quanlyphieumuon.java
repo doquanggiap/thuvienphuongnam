@@ -16,11 +16,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -29,9 +30,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import giapdqph34273.fpoly.pnlib.DAO.PhieuMuonDAO;
+import giapdqph34273.fpoly.pnlib.DAO.SachDAO;
 import giapdqph34273.fpoly.pnlib.R;
 import giapdqph34273.fpoly.pnlib.adapter.PhieuMuonAdapter;
 import giapdqph34273.fpoly.pnlib.model.PhieuMuon;
+import giapdqph34273.fpoly.pnlib.model.Sach;
 
 public class quanlyphieumuon extends AppCompatActivity {
     private Toolbar toolbar;
@@ -81,44 +84,56 @@ public class quanlyphieumuon extends AppCompatActivity {
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText edtTenTV, edtTenSach, edtTienThue;
+        EditText edtTenTV;
+        Spinner edtTenSach;
         CheckBox chkTrangThai;
         Button btnAdd, btnHuy;
 
         edtTenTV = view.findViewById(R.id.edtTenTV);
         edtTenSach = view.findViewById(R.id.edtTenSach);
-        edtTienThue = view.findViewById(R.id.edtTienThue);
         chkTrangThai = view.findViewById(R.id.chkTrangThai);
         btnAdd = view.findViewById(R.id.btnAdd);
         btnHuy = view.findViewById(R.id.btnHuy);
+
+        ArrayList<String> tenSachList = getTenSachList();      // Lấy danh sách tên sách và lưu vào biến tenSachList
+        ArrayAdapter<String> spinnerSach = new ArrayAdapter<>( // Tạo một Adapter để hiển thị danh sách tên sách trong Spinner
+                quanlyphieumuon.this,                          // Context của Activity hiện tại
+                android.R.layout.simple_spinner_item,          // Layout cho mỗi mục trong Spinner
+                tenSachList                                    // Danh sách dữ liệu cho Spinner
+        );
+
+        spinnerSach.
+                setDropDownViewResource(android.R.layout.
+                        simple_spinner_dropdown_item);         // Đặt layout cho dropdown của Spinner (có thể thay đổi nếu muốn)
+
+        edtTenSach.setAdapter(spinnerSach);                   // Gắn Adapter vào Spinner để hiển thị danh sách tên sách
+
+        ArrayList<Integer> giaTienThueList =
+                getGiaTienThueList();                         // Lấy danh sách giá tiền thuê sách và lưu vào biến giaTienThueList
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String tenTV = edtTenTV.getText().toString();
-                String tenSach = edtTenSach.getText().toString();
-                String tienThue = edtTienThue.getText().toString();
+                String tenSach = edtTenSach.getSelectedItem().toString();
+                int giaTienThue =
+                        giaTienThueList.get(edtTenSach.getSelectedItemPosition()); // lấy giá tiền thuê của cuốn sách được chọn trong Spinner
 
-                if (tenTV.isEmpty() || tenSach.isEmpty() || tienThue.isEmpty()) {
+                if (tenTV.isEmpty() || tenSach.isEmpty()) {
                     Toast.makeText(quanlyphieumuon.this, "Không được để trống", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!tienThue.matches("\\d+")) {
-                    Toast.makeText(quanlyphieumuon.this, "Tiền thuê phải là số", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 String ngay = String.valueOf(LocalDate.now()); // lấy ngày hiện tại
 
-
                 PhieuMuon pm = new PhieuMuon();
                 pm.setTenTV(tenTV);
                 pm.setTenSach(tenSach);
-                pm.setTienThue(Integer.parseInt(tienThue));
+                pm.setTienThue(giaTienThue);
                 pm.setNgayThue(ngay);
-                if (chkTrangThai.isChecked()){
+                if (chkTrangThai.isChecked()) {
                     pm.setTrangThaiMuon(1);
-                }else{
+                } else {
                     pm.setTrangThaiMuon(0);
                 }
                 if (phieuMuonDAO.addPM(pm) > 0) {
@@ -127,7 +142,7 @@ public class quanlyphieumuon extends AppCompatActivity {
                     list.addAll(phieuMuonDAO.getAllPhieuMuon());//thêm tất cả các phần tử của danh sách sản phẩm được lấy từ cơ sở dữ liệu vào danh sách list.
                     phieuMuonAdapter.notifyDataSetChanged();
                     dialog.dismiss();
-                }else {
+                } else {
                     Toast.makeText(quanlyphieumuon.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
                 }
 
@@ -141,6 +156,29 @@ public class quanlyphieumuon extends AppCompatActivity {
             }
         });
 
+    }
+
+    private ArrayList<Integer> getGiaTienThueList() { // lấy danh sách tiền thuê của tất cả sách
+        SachDAO sachDAO = new SachDAO(getApplicationContext());
+        ArrayList<Sach> list1 = sachDAO.getAllSach();
+        ArrayList<Integer> giaTienThueList = new ArrayList<>();
+
+        for (Sach sach : list1) {
+            giaTienThueList.add(sach.getTienThue());
+        }
+        return giaTienThueList;
+    }
+
+
+    private ArrayList<String> getTenSachList() { // lấy danh sách các cuốn sách
+        SachDAO sachDAO = new SachDAO(getApplicationContext());
+        ArrayList<Sach> list1 = sachDAO.getAllSach();
+        ArrayList<String> tenSachList = new ArrayList<>();
+
+        for (Sach sach : list1) {
+            tenSachList.add(sach.getTenSach());
+        }
+        return tenSachList;
     }
 
     private void setUpToolbar() {

@@ -10,9 +10,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -102,7 +104,8 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText edtTenSach,edtTienThue,edtTenLoai;
+        EditText edtTenSach,edtTienThue;
+        Spinner edtTenLoai;
         Button btnSua, btnHuy;
 
         edtTenSach = view.findViewById(R.id.edtTenSach);
@@ -113,16 +116,21 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder
 
         edtTenSach.setText(sach.getTenSach());
         edtTienThue.setText(String.valueOf(sach.getTienThue()));
-        edtTenLoai.setText(sach.getLoaiSach());
+        // Thay đổi dòng này:
+// edtTenLoai.setText(sach.getLoaiSach());
+// Thành dòng này:
+        edtTenLoai.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, getTenLoaiSachList()));
+        edtTenLoai.setSelection(getTenLoaiSachList().indexOf(sach.getLoaiSach()));
+
 
         btnSua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String tensach = edtTenSach.getText().toString();
                 String tienthue = edtTienThue.getText().toString();
-                String tenloai = edtTenLoai.getText().toString();
+                String tenloai = edtTenLoai.getSelectedItem().toString();
 
-                if (tensach.isEmpty()||tienthue.isEmpty()||tenloai.isEmpty()){
+                if (tensach.isEmpty()||tienthue.isEmpty()){
                     Toast.makeText(context, "Không được để trống", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -154,6 +162,16 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder
             }
         });
 
+    }
+    private ArrayList<String> getTenLoaiSachList() {
+        LoaiSachDAO loaiSachDAO = new LoaiSachDAO(context);
+        ArrayList<LoaiSach> list1 = loaiSachDAO.getAllLoaiSach();
+        ArrayList<String> tenLoaiSachList = new ArrayList<>();
+
+        for (LoaiSach loaiSach: list1){
+            tenLoaiSachList.add(loaiSach.getTenLoai());
+        }
+        return tenLoaiSachList;
     }
 
     @Override

@@ -64,14 +64,14 @@
             android:textSize="23sp"
             android:textStyle="bold" />
 
-        <EditText
+        <Spinner
             android:id="@+id/edtTenLoai"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/edtdesign"
             android:hint="Nhập loại sách"
             android:paddingLeft="10dp"
-            android:textSize="23sp" />
+            android:textSize="23sp"/>
 
 
         <LinearLayout

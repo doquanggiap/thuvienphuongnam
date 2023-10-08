@@ -10,10 +10,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,8 +25,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import giapdqph34273.fpoly.pnlib.DAO.PhieuMuonDAO;
+import giapdqph34273.fpoly.pnlib.DAO.SachDAO;
 import giapdqph34273.fpoly.pnlib.R;
 import giapdqph34273.fpoly.pnlib.model.PhieuMuon;
+import giapdqph34273.fpoly.pnlib.model.Sach;
 
 public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.PhieuMuonViewHolder> {
     private Context context;
@@ -112,7 +116,8 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText edtTenTV, edtTenSach;
+        EditText edtTenTV;
+        Spinner edtTenSach;
         TextView txtNgayThue, txtTienThue;
         CheckBox chkTrangThai;
         Button btnSua, btnHuy;
@@ -126,7 +131,9 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
         btnHuy = view.findViewById(R.id.btnHuy);
 
         edtTenTV.setText(phieuMuon.getTenTV());
-        edtTenSach.setText(phieuMuon.getTenSach());
+        edtTenSach.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, getTenSachList()));
+        edtTenSach.setSelection(getTenSachList().indexOf(phieuMuon.getTenSach()));
+
         txtNgayThue.setText(phieuMuon.getNgayThue());
         txtTienThue.setText(String.valueOf(phieuMuon.getTienThue()));
         if (phieuMuon.getTrangThaiMuon() == 1) {
@@ -138,7 +145,7 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
             @Override
             public void onClick(View v) {
                 String tenTV = edtTenTV.getText().toString();
-                String tenSach = edtTenSach.getText().toString();
+                String tenSach = edtTenSach.getSelectedItem().toString();
 
                 if (chkTrangThai.isChecked()){
                     phieuMuon.setTrangThaiMuon(1);
@@ -171,6 +178,16 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
                 dialog.dismiss();
             }
         });
+    }
+    private ArrayList<String> getTenSachList() {
+        SachDAO sachDAO = new SachDAO(context);
+        ArrayList<Sach> list1 = sachDAO.getAllSach();
+        ArrayList<String> tenSachList = new ArrayList<>();
+
+        for (Sach sach: list1){
+            tenSachList.add(sach.getTenSach());
+        }
+        return tenSachList;
     }
 
 

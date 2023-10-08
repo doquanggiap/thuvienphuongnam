@@ -73,15 +73,6 @@
             android:paddingLeft="10dp"
             android:textSize="23sp"/>
 
-<!--        <EditText-->
-<!--            android:id="@+id/edtTenLoai"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:background="@drawable/edtdesign"-->
-<!--            android:hint="Nhập loại sách"-->
-<!--            android:paddingLeft="10dp"-->
-<!--            android:textSize="23sp" />-->
-
 
         <LinearLayout
             android:layout_width="match_parent"
