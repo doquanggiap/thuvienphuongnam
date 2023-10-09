@@ -133,7 +133,8 @@ public class quanlyloaisach extends AppCompatActivity {
                     Intent intent = new Intent(quanlyloaisach.this, quanlysach.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.qltv) {
-
+                    Intent intent = new Intent(quanlyloaisach.this, quanlythanhvien.class);
+                    startActivity(intent);
                 } else if (item.getItemId() == R.id.topten) {
 
                 } else if (item.getItemId() == R.id.doanhthu) {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.quanlysach">
+    tools:context=".activity.Top10Sach">
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawerLayout"
@@ -30,23 +30,6 @@
                     android:id="@+id/recycleView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp">
-                    <ImageButton
-                        android:id="@+id/btnThem"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/add_button"
-                        android:src="@drawable/add"
-                        android:text="Nút nổi" />
-                </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>
 

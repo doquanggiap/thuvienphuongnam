@@ -16,11 +16,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -28,38 +26,42 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
 import giapdqph34273.fpoly.pnlib.DAO.LoaiSachDAO;
-import giapdqph34273.fpoly.pnlib.DAO.SachDAO;
+import giapdqph34273.fpoly.pnlib.DAO.ThanhVienDAO;
 import giapdqph34273.fpoly.pnlib.R;
-import giapdqph34273.fpoly.pnlib.adapter.SachAdapter;
+import giapdqph34273.fpoly.pnlib.adapter.LoaiSachAdapter;
+import giapdqph34273.fpoly.pnlib.adapter.ThanhVienAdapter;
 import giapdqph34273.fpoly.pnlib.model.LoaiSach;
-import giapdqph34273.fpoly.pnlib.model.Sach;
+import giapdqph34273.fpoly.pnlib.model.ThanhVien;
 
-public class quanlysach extends AppCompatActivity {
-    RecyclerView recyclerView;
+public class quanlythanhvien extends AppCompatActivity {
+    private RecyclerView recyclerView;
     ImageButton btnThem;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private NavigationView navigationView;
-    private SachDAO sachDAO;
-    private ArrayList<Sach> list;
-    private SachAdapter sachAdapter;
+    ThanhVienDAO thanhVienDAO;
+    private ArrayList<ThanhVien> list;
+    private ThanhVienAdapter thanhVienAdapter;
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quanlysach);
+        setContentView(R.layout.activity_quanlythanhvien);
 
         anhxa();
         setUpToolbar();
 
-        sachDAO = new SachDAO(this);
-        list = sachDAO.getAllSach();
-        sachAdapter = new SachAdapter(this,list);
+        thanhVienDAO = new ThanhVienDAO(this);
+        list = thanhVienDAO.getAllThanhVien();
+        thanhVienAdapter = new ThanhVienAdapter(this,list);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(sachAdapter);
+        recyclerView.setAdapter(thanhVienAdapter);
+
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,79 +72,51 @@ public class quanlysach extends AppCompatActivity {
     }
 
     private void dialogThem() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(quanlysach.this);
-        View view = getLayoutInflater().inflate(R.layout.item_add_sach, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(quanlythanhvien.this);
+        View view = getLayoutInflater().inflate(R.layout.item_add_thanhvien, null);
         builder.setView(view);
         builder.setCancelable(false);
         Dialog dialog = builder.create();
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText edtTenSach,edtTienThue;
-        Button btnAdd, btnHuy;
-        Spinner edtTenLoai;
+        EditText edtTenTV,edtNamSinh;
+        Button btnAdd,btnHuy;
 
-        edtTenSach = view.findViewById(R.id.edtTenSach);
-        edtTienThue = view.findViewById(R.id.edtTienThue);
-        edtTenLoai = view.findViewById(R.id.edtTenLoai);
+        edtTenTV = view.findViewById(R.id.edtTenTV);
+        edtNamSinh = view.findViewById(R.id.edtNamSinh);
         btnAdd = view.findViewById(R.id.btnAdd);
         btnHuy = view.findViewById(R.id.btnHuy);
-
-        ArrayList<String> tenLoaiSachList = getTenLoaiSachList();
-        ArrayAdapter<String> spinnerLoaiSach = new ArrayAdapter<>(
-                quanlysach.this,
-                android.R.layout.simple_spinner_item,
-                tenLoaiSachList
-                );
-        spinnerLoaiSach.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        edtTenLoai.setAdapter(spinnerLoaiSach);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tensach = edtTenSach.getText().toString();
-                String tienthue = edtTienThue.getText().toString();
-                String tenloai = edtTenLoai.getSelectedItem().toString();
+                String tentv = edtTenTV.getText().toString();
+                String namsinh = edtNamSinh.getText().toString();
 
-                if (tensach.isEmpty()||tienthue.isEmpty()||tenloai.isEmpty()){
-                    Toast.makeText(quanlysach.this, "Không được để trống", Toast.LENGTH_SHORT).show();
+                if (tentv.isEmpty()||namsinh.isEmpty()){
+                    Toast.makeText(quanlythanhvien.this, "Không được để trống", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (!tienthue.matches("\\d+")){
-                    Toast.makeText(quanlysach.this, "Tiền thuê phải là sô", Toast.LENGTH_SHORT).show();
+                if (!namsinh.matches("\\d+")){
+                    Toast.makeText(quanlythanhvien.this, "Năm sinh phải là số", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Sach sach = new Sach(tensach,Integer.parseInt(tienthue),tenloai);
 
-                if (sachDAO.addS(sach) > 0) {
-                    Toast.makeText(quanlysach.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                ThanhVien thanhVien = new ThanhVien(tentv,Integer.parseInt(namsinh));
+
+                if (thanhVienDAO.addTV(thanhVien) > 0) {
+                    Toast.makeText(quanlythanhvien.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                     list.clear();
-                    list.addAll(sachDAO.getAllSach());
-                    sachAdapter.notifyDataSetChanged();
+                    list.addAll(thanhVienDAO.getAllThanhVien());
+                    thanhVienAdapter.notifyDataSetChanged();
                     dialog.dismiss();
                 }else {
-                    Toast.makeText(quanlysach.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(quanlythanhvien.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        btnHuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-    }
-
-    private ArrayList<String> getTenLoaiSachList() {
-        LoaiSachDAO loaiSachDAO = new LoaiSachDAO(getApplicationContext());
-        ArrayList<LoaiSach> list1 = loaiSachDAO.getAllLoaiSach();
-        ArrayList<String> tenLoaiSachList = new ArrayList<>();
-
-        for (LoaiSach loaiSach: list1){
-            tenLoaiSachList.add(loaiSach.getTenLoai());
-        }
-        return tenLoaiSachList;
     }
 
     private void anhxa() {
@@ -152,26 +126,34 @@ public class quanlysach extends AppCompatActivity {
         toolbar = findViewById(R.id.my_toolbar);
         navigationView = findViewById(R.id.navigationView);
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            drawerLayout.openDrawer(GravityCompat.START);
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu_icon);
-        getSupportActionBar().setTitle("Quản lý sách");
+        getSupportActionBar().setTitle("Quản lý loại sách");
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.qlpm) {
-                    Intent intent = new Intent(quanlysach.this, quanlyphieumuon.class);
+                    Intent intent = new Intent(quanlythanhvien.this, quanlyphieumuon.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.qlls) {
-                    Intent intent = new Intent(quanlysach.this, quanlyloaisach.class);
+                    Intent intent = new Intent(quanlythanhvien.this, quanlyloaisach.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.qls) {
-                    drawerLayout.close();
-                } else if (item.getItemId() == R.id.qltv) {
-                    Intent intent = new Intent(quanlysach.this, quanlythanhvien.class);
+                    Intent intent = new Intent(quanlythanhvien.this, quanlysach.class);
                     startActivity(intent);
+                } else if (item.getItemId() == R.id.qltv) {
+                    drawerLayout.close();
                 } else if (item.getItemId() == R.id.topten) {
 
                 } else if (item.getItemId() == R.id.doanhthu) {
@@ -187,12 +169,4 @@ public class quanlysach extends AppCompatActivity {
             }
         });
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            drawerLayout.openDrawer(GravityCompat.START);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 }

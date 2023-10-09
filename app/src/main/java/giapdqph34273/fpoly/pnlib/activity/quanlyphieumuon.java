@@ -31,10 +31,12 @@ import java.util.ArrayList;
 
 import giapdqph34273.fpoly.pnlib.DAO.PhieuMuonDAO;
 import giapdqph34273.fpoly.pnlib.DAO.SachDAO;
+import giapdqph34273.fpoly.pnlib.DAO.ThanhVienDAO;
 import giapdqph34273.fpoly.pnlib.R;
 import giapdqph34273.fpoly.pnlib.adapter.PhieuMuonAdapter;
 import giapdqph34273.fpoly.pnlib.model.PhieuMuon;
 import giapdqph34273.fpoly.pnlib.model.Sach;
+import giapdqph34273.fpoly.pnlib.model.ThanhVien;
 
 public class quanlyphieumuon extends AppCompatActivity {
     private Toolbar toolbar;
@@ -84,8 +86,7 @@ public class quanlyphieumuon extends AppCompatActivity {
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText edtTenTV;
-        Spinner edtTenSach;
+        Spinner edtTenSach,edtTenTV;
         CheckBox chkTrangThai;
         Button btnAdd, btnHuy;
 
@@ -94,6 +95,19 @@ public class quanlyphieumuon extends AppCompatActivity {
         chkTrangThai = view.findViewById(R.id.chkTrangThai);
         btnAdd = view.findViewById(R.id.btnAdd);
         btnHuy = view.findViewById(R.id.btnHuy);
+
+        ArrayList<String> tenTVList = getTenTV();
+        ArrayAdapter<String> spinnerTV = new ArrayAdapter<>(
+                quanlyphieumuon.this,
+                android.R.layout.simple_spinner_item,
+                tenTVList
+        );
+
+        spinnerTV.
+                setDropDownViewResource(android.R.layout.
+                        simple_spinner_dropdown_item);
+
+        edtTenTV.setAdapter(spinnerTV);
 
         ArrayList<String> tenSachList = getTenSachList();      // Lấy danh sách tên sách và lưu vào biến tenSachList
         ArrayAdapter<String> spinnerSach = new ArrayAdapter<>( // Tạo một Adapter để hiển thị danh sách tên sách trong Spinner
@@ -114,7 +128,7 @@ public class quanlyphieumuon extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tenTV = edtTenTV.getText().toString();
+                String tenTV = edtTenTV.getSelectedItem().toString();
                 String tenSach = edtTenSach.getSelectedItem().toString();
                 int giaTienThue =
                         giaTienThueList.get(edtTenSach.getSelectedItemPosition()); // lấy giá tiền thuê của cuốn sách được chọn trong Spinner
@@ -181,6 +195,19 @@ public class quanlyphieumuon extends AppCompatActivity {
         return tenSachList;
     }
 
+    private ArrayList<String> getTenTV() { // lấy danh sách các thành viên
+        ThanhVienDAO thanhVienDAO = new ThanhVienDAO(getApplicationContext());
+        ArrayList<ThanhVien> list1 = thanhVienDAO.getAllThanhVien();
+        ArrayList<String> tenTVList = new ArrayList<>();
+
+        for (ThanhVien thanhVien : list1) {
+            tenTVList.add(thanhVien.getTenTV());
+        }
+        return tenTVList;
+    }
+
+
+
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -199,9 +226,11 @@ public class quanlyphieumuon extends AppCompatActivity {
                     Intent intent = new Intent(quanlyphieumuon.this, quanlysach.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.qltv) {
-
+                    Intent intent = new Intent(quanlyphieumuon.this, quanlythanhvien.class);
+                    startActivity(intent);
                 } else if (item.getItemId() == R.id.topten) {
-
+                    Intent intent = new Intent(quanlyphieumuon.this, Top10Sach.class);
+                    startActivity(intent);
                 } else if (item.getItemId() == R.id.doanhthu) {
 
                 } else if (item.getItemId() == R.id.themThanhVien) {

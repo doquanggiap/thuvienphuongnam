@@ -13,6 +13,12 @@
         android:theme="@style/Theme.PNLib"
         tools:targetApi="31">
         <activity
+            android:name=".activity.Top10Sach"
+            android:exported="false" />
+        <activity
+            android:name=".activity.quanlythanhvien"
+            android:exported="false" />
+        <activity
             android:name=".activity.quanlysach"
             android:exported="false" />
         <activity
