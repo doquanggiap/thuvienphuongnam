@@ -24,11 +24,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import giapdqph34273.fpoly.pnlib.DAO.LoaiSachDAO;
 import giapdqph34273.fpoly.pnlib.DAO.PhieuMuonDAO;
 import giapdqph34273.fpoly.pnlib.DAO.SachDAO;
+import giapdqph34273.fpoly.pnlib.DAO.ThanhVienDAO;
 import giapdqph34273.fpoly.pnlib.R;
+import giapdqph34273.fpoly.pnlib.model.LoaiSach;
 import giapdqph34273.fpoly.pnlib.model.PhieuMuon;
 import giapdqph34273.fpoly.pnlib.model.Sach;
+import giapdqph34273.fpoly.pnlib.model.ThanhVien;
 
 public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.PhieuMuonViewHolder> {
     private Context context;
@@ -116,8 +120,7 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText edtTenTV;
-        Spinner edtTenSach;
+        Spinner edtTenSach,edtTenTV;
         TextView txtNgayThue, txtTienThue;
         CheckBox chkTrangThai;
         Button btnSua, btnHuy;
@@ -130,7 +133,9 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
         btnSua = view.findViewById(R.id.btnSua);
         btnHuy = view.findViewById(R.id.btnHuy);
 
-        edtTenTV.setText(phieuMuon.getTenTV());
+        edtTenTV.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, getTenThanhVienList()));
+        edtTenTV.setSelection(getTenThanhVienList().indexOf(phieuMuon.getTenTV()));
+
         edtTenSach.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, getTenSachList()));
         edtTenSach.setSelection(getTenSachList().indexOf(phieuMuon.getTenSach()));
 
@@ -144,7 +149,7 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
         btnSua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tenTV = edtTenTV.getText().toString();
+                String tenTV = edtTenTV.getSelectedItem().toString();
                 String tenSach = edtTenSach.getSelectedItem().toString();
 
                 if (chkTrangThai.isChecked()){
@@ -188,6 +193,16 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
             tenSachList.add(sach.getTenSach());
         }
         return tenSachList;
+    }
+    private ArrayList<String> getTenThanhVienList() {
+        ThanhVienDAO thanhVienDAO = new ThanhVienDAO(context);
+        ArrayList<ThanhVien> list1 = thanhVienDAO.getAllThanhVien();
+        ArrayList<String> tenThanhVienList = new ArrayList<>();
+
+        for (ThanhVien thanhVien: list1){
+            tenThanhVienList.add(thanhVien.getTenTV());
+        }
+        return tenThanhVienList;
     }
 
 

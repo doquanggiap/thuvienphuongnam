@@ -5,19 +5,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import giapdqph34273.fpoly.pnlib.database.DBHelper;
 import giapdqph34273.fpoly.pnlib.database.DBHelper_NguoiDung;
 import giapdqph34273.fpoly.pnlib.model.NguoiDung;
 
 public class NguoiDungDao {
-    private DBHelper_NguoiDung db_user;
+    private DBHelper dbHelper;
     SQLiteDatabase database;
 
     public NguoiDungDao(Context context) {
-        db_user = new DBHelper_NguoiDung(context);
+        dbHelper = new DBHelper(context);
     }
 
     public boolean checkUser(String username, String password) {
-        database = db_user.getReadableDatabase();
+        database = dbHelper.getReadableDatabase();
         String[] columns = {"ID"};
         String selection = "TENDANGNHAP" + "=? and " + "MATKHAU" + "=?";
         String[] selectionArgs = {username, password};

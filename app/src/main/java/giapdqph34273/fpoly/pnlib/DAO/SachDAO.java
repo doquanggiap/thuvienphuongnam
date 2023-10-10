@@ -7,22 +7,23 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
+import giapdqph34273.fpoly.pnlib.database.DBHelper;
 import giapdqph34273.fpoly.pnlib.database.DBHelper_LoaiSach;
 import giapdqph34273.fpoly.pnlib.database.DBHelper_Sach;
 import giapdqph34273.fpoly.pnlib.model.LoaiSach;
 import giapdqph34273.fpoly.pnlib.model.Sach;
 
 public class SachDAO {
-    private DBHelper_Sach db_s;
+    private DBHelper dbHelper;
     SQLiteDatabase database;
 
     public SachDAO(Context context) {
-        db_s = new DBHelper_Sach(context);
+        dbHelper = new DBHelper(context);
     }
 
     public ArrayList<Sach> getAllSach() {
         ArrayList<Sach> list = new ArrayList<>();
-        database = db_s.getReadableDatabase();
+        database = dbHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM sach", null);
         while (cursor.moveToNext()) {
             Sach s = new Sach(
@@ -37,7 +38,7 @@ public class SachDAO {
     }
 
     public long addS(Sach sach) {
-        database = db_s.getWritableDatabase();
+        database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("TENSACH", sach.getTenSach());
         values.put("TIENTHUE", sach.getTienThue());
@@ -46,13 +47,13 @@ public class SachDAO {
     }
 
     public long deleteS(int id) {
-        database = db_s.getWritableDatabase();
+        database = dbHelper.getWritableDatabase();
         long check = database.delete("sach", "ID=?", new String[]{String.valueOf(id)});
         return check;
     }
 
     public long updateS(Sach sach) {
-        database = db_s.getWritableDatabase();
+        database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("TENSACH", sach.getTenSach());
         values.put("TIENTHUE", sach.getTienThue());

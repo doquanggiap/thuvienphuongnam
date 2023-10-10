@@ -30,7 +30,7 @@
             android:textSize="23sp"
             android:textStyle="bold" />
 
-        <EditText
+        <Spinner
             android:id="@+id/edtTenTV"
             android:layout_width="match_parent"
             android:layout_height="50dp"

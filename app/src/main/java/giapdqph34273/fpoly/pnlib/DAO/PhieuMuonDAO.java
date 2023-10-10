@@ -8,21 +8,22 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
+import giapdqph34273.fpoly.pnlib.database.DBHelper;
 import giapdqph34273.fpoly.pnlib.database.DBHelper_NguoiDung;
 import giapdqph34273.fpoly.pnlib.database.DBHelper_PhieuMuon;
 import giapdqph34273.fpoly.pnlib.model.PhieuMuon;
 import giapdqph34273.fpoly.pnlib.model.TopSach;
 
 public class PhieuMuonDAO {
-    private DBHelper_PhieuMuon db_pm;
+    private DBHelper dbHelper;
     SQLiteDatabase database;
 
     public PhieuMuonDAO(Context context) {
-        db_pm = new DBHelper_PhieuMuon(context);
+        dbHelper = new DBHelper(context);
     }
     public ArrayList<PhieuMuon> getAllPhieuMuon() {
         ArrayList<PhieuMuon> list = new ArrayList<>();
-        database = db_pm.getReadableDatabase();
+        database = dbHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM PM", null);
         while (cursor.moveToNext()) {
             PhieuMuon pm = new PhieuMuon(
@@ -38,7 +39,7 @@ public class PhieuMuonDAO {
         return list;
     }
     public long addPM(PhieuMuon pm) {
-        database = db_pm.getWritableDatabase();// Lấy đối tượng SQLiteDatabase để ghi dữ liệu vào cơ sở dữ liệu
+        database = dbHelper.getWritableDatabase();// Lấy đối tượng SQLiteDatabase để ghi dữ liệu vào cơ sở dữ liệu
         ContentValues values = new ContentValues();// Tạo một đối tượng ContentValues để chứa các giá trị của đối tượng sanPham
         values.put("TENTV", pm.getTenTV());
         values.put("TENSACH", pm.getTenSach());
@@ -48,12 +49,12 @@ public class PhieuMuonDAO {
         return database.insert("PM", null, values);
     }
     public long deletePM(int id) {
-        database = db_pm.getWritableDatabase();
+        database = dbHelper.getWritableDatabase();
         long check = database.delete("PM", "ID=?", new String[]{String.valueOf(id)});
         return check;
     }
     public long updatePM(PhieuMuon pm) {
-        database = db_pm.getWritableDatabase();
+        database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("TENTV", pm.getTenTV());
         values.put("TENSACH", pm.getTenSach());
@@ -75,7 +76,7 @@ public class PhieuMuonDAO {
                 "ORDER BY SoLuotMuon DESC " +
                 "LIMIT 10";
 
-         database = db_pm.getReadableDatabase();
+         database = dbHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {

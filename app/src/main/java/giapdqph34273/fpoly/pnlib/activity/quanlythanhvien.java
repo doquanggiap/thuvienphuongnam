@@ -155,7 +155,8 @@ public class quanlythanhvien extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.qltv) {
                     drawerLayout.close();
                 } else if (item.getItemId() == R.id.topten) {
-
+                    Intent intent = new Intent(quanlythanhvien.this, Top10Sach.class);
+                    startActivity(intent);
                 } else if (item.getItemId() == R.id.doanhthu) {
 
                 } else if (item.getItemId() == R.id.themThanhVien) {

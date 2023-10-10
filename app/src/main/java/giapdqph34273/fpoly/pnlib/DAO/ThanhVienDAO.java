@@ -7,22 +7,23 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
+import giapdqph34273.fpoly.pnlib.database.DBHelper;
 import giapdqph34273.fpoly.pnlib.database.DBHelper_LoaiSach;
 import giapdqph34273.fpoly.pnlib.database.DBHelper_ThanhVien;
 import giapdqph34273.fpoly.pnlib.model.LoaiSach;
 import giapdqph34273.fpoly.pnlib.model.ThanhVien;
 
 public class ThanhVienDAO {
-    private DBHelper_ThanhVien db_tv;
+    private DBHelper dbHelper;
     SQLiteDatabase database;
 
     public ThanhVienDAO(Context context) {
-        db_tv = new DBHelper_ThanhVien(context);
+        dbHelper = new DBHelper(context);
     }
 
     public ArrayList<ThanhVien> getAllThanhVien() {
         ArrayList<ThanhVien> list = new ArrayList<>();
-        database = db_tv.getReadableDatabase();
+        database = dbHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM thanhvien", null);
         while (cursor.moveToNext()) {
             ThanhVien tv = new ThanhVien(
@@ -36,7 +37,7 @@ public class ThanhVienDAO {
     }
 
     public long addTV(ThanhVien thanhVien) {
-        database = db_tv.getWritableDatabase();
+        database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("TENTV", thanhVien.getTenTV());
         values.put("NAMSINH", thanhVien.getNamSinh());
@@ -44,13 +45,13 @@ public class ThanhVienDAO {
     }
 
     public long deleteTV(int id) {
-        database = db_tv.getWritableDatabase();
+        database = dbHelper.getWritableDatabase();
         long check = database.delete("thanhvien", "ID=?", new String[]{String.valueOf(id)});
         return check;
     }
 
     public long updateTV(ThanhVien thanhVien) {
-        database = db_tv.getWritableDatabase();
+        database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("TENTV", thanhVien.getTenTV());
         values.put("NAMSINH", thanhVien.getNamSinh());
