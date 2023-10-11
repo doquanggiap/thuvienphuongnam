@@ -8,9 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import giapdqph34273.fpoly.pnlib.database.DBHelper;
-import giapdqph34273.fpoly.pnlib.database.DBHelper_LoaiSach;
-import giapdqph34273.fpoly.pnlib.database.DBHelper_ThanhVien;
-import giapdqph34273.fpoly.pnlib.model.LoaiSach;
 import giapdqph34273.fpoly.pnlib.model.ThanhVien;
 
 public class ThanhVienDAO {

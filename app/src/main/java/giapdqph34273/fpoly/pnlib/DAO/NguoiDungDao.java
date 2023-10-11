@@ -1,13 +1,10 @@
 package giapdqph34273.fpoly.pnlib.DAO;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import giapdqph34273.fpoly.pnlib.database.DBHelper;
-import giapdqph34273.fpoly.pnlib.database.DBHelper_NguoiDung;
-import giapdqph34273.fpoly.pnlib.model.NguoiDung;
 
 public class NguoiDungDao {
     private DBHelper dbHelper;

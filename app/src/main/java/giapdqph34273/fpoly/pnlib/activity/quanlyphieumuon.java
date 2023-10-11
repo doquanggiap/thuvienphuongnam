@@ -233,7 +233,8 @@ public class quanlyphieumuon extends AppCompatActivity {
                     Intent intent = new Intent(quanlyphieumuon.this, Top10Sach.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.doanhthu) {
-
+                    Intent intent = new Intent(quanlyphieumuon.this, tongDoanhThu.class);
+                    startActivity(intent);
                 } else if (item.getItemId() == R.id.themThanhVien) {
 
                 } else if (item.getItemId() == R.id.doiMatKhau) {
@@ -276,6 +277,4 @@ public class quanlyphieumuon extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }

@@ -43,14 +43,12 @@ public class Top10Sach extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top10_sach);
 
-
         anhxa();
         setUpToolbar();
 
-
         phieumuonDAO = new PhieuMuonDAO(this);
         list = (ArrayList<TopSach>) phieumuonDAO.getTop10Sach();
-        topAdapter = new TopAdapter(Top10Sach.this, list, phieumuonDAO);
+        topAdapter = new TopAdapter(Top10Sach.this, list);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -89,7 +87,8 @@ public class Top10Sach extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.topten) {
                     drawerLayout.close();
                 } else if (item.getItemId() == R.id.doanhthu) {
-
+                    Intent intent = new Intent(Top10Sach.this, tongDoanhThu.class);
+                    startActivity(intent);
                 } else if (item.getItemId() == R.id.themThanhVien) {
 
                 } else if (item.getItemId() == R.id.doiMatKhau) {

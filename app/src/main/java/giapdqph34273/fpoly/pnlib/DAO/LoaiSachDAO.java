@@ -8,10 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import giapdqph34273.fpoly.pnlib.database.DBHelper;
-import giapdqph34273.fpoly.pnlib.database.DBHelper_LoaiSach;
-import giapdqph34273.fpoly.pnlib.database.DBHelper_PhieuMuon;
 import giapdqph34273.fpoly.pnlib.model.LoaiSach;
-import giapdqph34273.fpoly.pnlib.model.PhieuMuon;
 
 public class LoaiSachDAO {
     private DBHelper dbHelper;

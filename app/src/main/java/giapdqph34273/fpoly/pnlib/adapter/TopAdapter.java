@@ -19,7 +19,7 @@ import giapdqph34273.fpoly.pnlib.model.TopSach;
 public class TopAdapter extends RecyclerView.Adapter<TopAdapter.TopViewHolder> {
     private Context context;
     private ArrayList<TopSach> list;
-    public TopAdapter(Context context, ArrayList<TopSach> list, PhieuMuonDAO phieumuonDAO) {
+    public TopAdapter(Context context, ArrayList<TopSach> list) {
         this.context = context;
         this.list = list;
     }

@@ -9,8 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import giapdqph34273.fpoly.pnlib.database.DBHelper;
-import giapdqph34273.fpoly.pnlib.database.DBHelper_NguoiDung;
-import giapdqph34273.fpoly.pnlib.database.DBHelper_PhieuMuon;
 import giapdqph34273.fpoly.pnlib.model.PhieuMuon;
 import giapdqph34273.fpoly.pnlib.model.TopSach;
 
@@ -21,6 +19,7 @@ public class PhieuMuonDAO {
     public PhieuMuonDAO(Context context) {
         dbHelper = new DBHelper(context);
     }
+
     public ArrayList<PhieuMuon> getAllPhieuMuon() {
         ArrayList<PhieuMuon> list = new ArrayList<>();
         database = dbHelper.getReadableDatabase();
@@ -32,12 +31,13 @@ public class PhieuMuonDAO {
                     cursor.getInt(3),
                     cursor.getString(4),
                     cursor.getInt(5)
-                    );
+            );
             pm.setId(cursor.getInt(0));
             list.add(pm);
         }
         return list;
     }
+
     public long addPM(PhieuMuon pm) {
         database = dbHelper.getWritableDatabase();// Lấy đối tượng SQLiteDatabase để ghi dữ liệu vào cơ sở dữ liệu
         ContentValues values = new ContentValues();// Tạo một đối tượng ContentValues để chứa các giá trị của đối tượng sanPham
@@ -48,11 +48,13 @@ public class PhieuMuonDAO {
         values.put("TRANGTHAI", pm.getTrangThaiMuon());
         return database.insert("PM", null, values);
     }
+
     public long deletePM(int id) {
         database = dbHelper.getWritableDatabase();
         long check = database.delete("PM", "ID=?", new String[]{String.valueOf(id)});
         return check;
     }
+
     public long updatePM(PhieuMuon pm) {
         database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -76,7 +78,7 @@ public class PhieuMuonDAO {
                 "ORDER BY SoLuotMuon DESC " +
                 "LIMIT 10";
 
-         database = dbHelper.getReadableDatabase();
+        database = dbHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
@@ -84,7 +86,7 @@ public class PhieuMuonDAO {
                 @SuppressLint("Range") String tenSach = cursor.getString(cursor.getColumnIndex("TenSach"));
                 @SuppressLint("Range") int soLuotMuon = cursor.getInt(cursor.getColumnIndex("SoLuotMuon"));
 
-                TopSach topSach = new TopSach(tenSach,soLuotMuon);
+                TopSach topSach = new TopSach(tenSach, soLuotMuon);
 
                 top10List.add(topSach);
             } while (cursor.moveToNext());
@@ -96,6 +98,24 @@ public class PhieuMuonDAO {
         return top10List;
     }
 
+    @SuppressLint("Range")
+    public int getTongDoanhThu(String startDate, String endDate) {
+        database = dbHelper.getReadableDatabase();
+        int tongDoanhThu = 0;
+
+        String query = "SELECT SUM(TIENTHUE) AS TongDoanhThu " +
+                "FROM PM " +
+                "WHERE NGAYTHUE BETWEEN ? AND ?";
+
+        Cursor cursor = database.rawQuery(query, new String[]{startDate, endDate});
+
+        if (cursor.moveToFirst()) {
+            tongDoanhThu = cursor.getInt(cursor.getColumnIndex("TongDoanhThu"));
+        }
+
+        cursor.close();
+        return tongDoanhThu;
+    }
 
 
 }

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.tongDoanhThu">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/my_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#9AD2FC" />
+
+            <!--            Ngày bắt đầu-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="140dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="26dp"
+                    android:background="@drawable/dangnhap"
+                    android:text="Từ ngày"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+
+                <EditText
+                    android:id="@+id/edtNgayBatDau"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:hint="Chọn ngày bắt đầu"
+                    android:inputType="none" />
+
+            </LinearLayout>
+
+            <!--            Ngày kết thúc-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnNgayKetThuc"
+                    android:layout_width="140dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="26dp"
+                    android:background="@drawable/dangnhap"
+                    android:text="Đến ngày"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+
+                <EditText
+                    android:id="@+id/edtNgayKetThuc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:hint="Chọn ngày kết thúc"
+                    android:inputType="none" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnTinhDoanhThu"
+                android:layout_width="140dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="21dp"
+                android:background="@drawable/huy"
+                android:text="Doanh thu"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Doanh thu nhận được:"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtTongDoanhThu"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="10dp"
+                android:layout_margin="26dp"
+                android:background="@drawable/doanhthu"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="28dp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigationView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/headerlayout"
+            app:itemIconTint="#9AD2FC"
+            app:menu="@menu/menu_navigation" />
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</LinearLayout>
