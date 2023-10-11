@@ -36,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "TRANGTHAI INTEGER)";
         db.execSQL(createTablePM);
         String pms = "INSERT INTO PM (TENTV, TENSACH, TIENTHUE,NGAYTHUE,TRANGTHAI) VALUES" +
-                "('Nguyễn Tuấn Phong','Photoshop',10000,'2023-01-10',1)";
+                "('Nguyễn Tuấn Phong','Photoshop',3000,'2023-01-10',1)";
         db.execSQL(pms);
 
         // loại sách
