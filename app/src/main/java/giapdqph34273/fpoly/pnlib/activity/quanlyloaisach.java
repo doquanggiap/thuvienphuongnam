@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -174,12 +176,20 @@ public class quanlyloaisach extends AppCompatActivity {
         builder.setIcon(R.drawable.baseline_question_mark_24);
         builder.setCancelable(false);
         builder.setTitle("Đăng xuất");
-        builder.setMessage("Bạn có muốn đăng xuất không ?");
+        builder.setMessage("Bạn có muốn đăng xuất không?");
         builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // bắt sự kiện nhấn nút Yes
+                // Bắt sự kiện nhấn nút Có
+                SharedPreferences sharedPreferences = getSharedPreferences("thongtin", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("isLoggedIn", false);
+                editor.apply();
                 Intent intent = new Intent(quanlyloaisach.this, dangNhap.class);
+
+                // Đặt cờ FLAG_ACTIVITY_NEW_TASK để tạo một nhiệm vụ mới
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                 startActivity(intent);
                 finish();
             }
@@ -187,10 +197,11 @@ public class quanlyloaisach extends AppCompatActivity {
         builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // bắt sự kiện nhấn nút No
+                // Bắt sự kiện nhấn nút Không
             }
         });
         builder.show();
     }
+
 
 }
