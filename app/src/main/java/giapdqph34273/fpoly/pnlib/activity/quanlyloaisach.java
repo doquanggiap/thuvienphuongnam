@@ -147,7 +147,8 @@ public class quanlyloaisach extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.themThanhVien) {
 
                 } else if (item.getItemId() == R.id.doiMatKhau) {
-
+                    Intent intent = new Intent(quanlyloaisach.this, doiMatKhau.class);
+                    startActivity(intent);
                 } else if (item.getItemId() == R.id.dangxuat) {
                     dialog_dangxuat();
                 }

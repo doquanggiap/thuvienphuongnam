@@ -24,7 +24,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "MATKHAU TEXT)";
         db.execSQL(createTableUser);// truy vấn
         String dsnd = "INSERT INTO user (TENDANGNHAP, HOTEN, MATKHAU) VALUES" +
-                "('admin','Đỗ Quang Giáp','admin')";
+                "('admin','Đỗ Quang Giáp','admin')," +
+                "('123','Đỗ Quang Giáp','123')";
         db.execSQL(dsnd);
 
         // phiếu mượn
@@ -35,9 +36,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "NGAYTHUE TEXT," +
                 "TRANGTHAI INTEGER)";
         db.execSQL(createTablePM);
-        String pms = "INSERT INTO PM (TENTV, TENSACH, TIENTHUE,NGAYTHUE,TRANGTHAI) VALUES" +
-                "('Nguyễn Tuấn Phong','Photoshop',3000,'2023-01-10',1)";
-        db.execSQL(pms);
+//        String pms = "INSERT INTO PM (TENTV, TENSACH, TIENTHUE,NGAYTHUE,TRANGTHAI) VALUES" +
+//                "('Nguyễn Tuấn Phong','Photoshop',3000,'2023-01-10',1)";
+//        db.execSQL(pms);
 
         // loại sách
         String createTableLoaiSach = "CREATE TABLE loaiSach(ID INTEGER PRIMARY KEY AUTOINCREMENT," +

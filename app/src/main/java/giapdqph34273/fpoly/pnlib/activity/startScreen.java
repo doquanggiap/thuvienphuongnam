@@ -8,7 +8,7 @@ import android.os.Handler;
 
 import giapdqph34273.fpoly.pnlib.R;
 
-public class MainActivity extends AppCompatActivity {
+public class startScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, dangNhap.class);
+                Intent intent = new Intent(startScreen.this, dangNhap.class);
                 startActivity(intent);
                 finish();
             }

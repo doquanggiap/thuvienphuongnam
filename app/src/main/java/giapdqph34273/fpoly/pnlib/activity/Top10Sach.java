@@ -94,7 +94,8 @@ public class Top10Sach extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.themThanhVien) {
 
                 } else if (item.getItemId() == R.id.doiMatKhau) {
-
+                    Intent intent = new Intent(Top10Sach.this, tongDoanhThu.class);
+                    startActivity(intent);
                 } else if (item.getItemId() == R.id.dangxuat) {
                     dialog_dangxuat();
                 }

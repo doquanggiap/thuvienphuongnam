@@ -16,6 +16,9 @@
             android:name=".activity.tongDoanhThu"
             android:exported="false" />
         <activity
+            android:name=".activity.doiMatKhau"
+            android:exported="false" />
+        <activity
             android:name=".activity.Top10Sach"
             android:exported="false" />
         <activity
@@ -34,7 +37,7 @@
             android:name=".activity.dangNhap"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.startScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

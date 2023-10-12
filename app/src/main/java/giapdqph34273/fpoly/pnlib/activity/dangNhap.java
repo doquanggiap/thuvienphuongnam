@@ -2,7 +2,9 @@ package giapdqph34273.fpoly.pnlib.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -24,11 +26,7 @@ public class dangNhap extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dang_nhap);
 
-        txtUser = findViewById(R.id.txtUser);
-        txtPass = findViewById(R.id.txtPass);
-        btnDangnhap = findViewById(R.id.btnDangnhap);
-        btnHuy = findViewById(R.id.btnHuy);
-        nguoiDungDao = new NguoiDungDao(dangNhap.this);
+        anhxa();
 
         btnDangnhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,16 +37,31 @@ public class dangNhap extends AppCompatActivity {
                     Toast.makeText(dangNhap.this, "Không được để trống thông tin", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (nguoiDungDao.checkUser(user,pass)){
+                if (nguoiDungDao.checkUser(user, pass)) {
+                    // Lưu tên đăng nhập vào SharedPreferences khi đăng nhập thành công
+                    SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("loggedInUser", user); // Lưu tên đăng nhập
+                    editor.apply();
+
                     Toast.makeText(dangNhap.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(dangNhap.this, quanlyphieumuon.class);
                     startActivity(intent);
                     finish();
-                }else {
+                } else {
                     Toast.makeText(dangNhap.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+    }
+
+    private void anhxa() {
+        txtUser = findViewById(R.id.txtUser);
+        txtPass = findViewById(R.id.txtPass);
+        btnDangnhap = findViewById(R.id.btnDangnhap);
+        btnHuy = findViewById(R.id.btnHuy);
+        nguoiDungDao = new NguoiDungDao(dangNhap.this);
     }
 
 }

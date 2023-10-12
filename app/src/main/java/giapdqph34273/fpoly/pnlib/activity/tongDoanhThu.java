@@ -33,7 +33,7 @@ public class tongDoanhThu extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     EditText edtNgayBatDau, edtNgayKetThuc;
-    Button btnTinhDoanhThu;
+    Button btnTinhDoanhThu, btnTuNgay, btnDenNgay;
     TextView txtTongDoanhThu;
     PhieuMuonDAO phieumuonDAO;
     String ngayBatDau, ngayKetThuc;
@@ -47,6 +47,13 @@ public class tongDoanhThu extends AppCompatActivity {
         anhxa();
         setUpToolbar();
 
+        btnTuNgay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chonNgayBatDau();
+            }
+        });
+
         edtNgayBatDau.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,12 +61,19 @@ public class tongDoanhThu extends AppCompatActivity {
             }
         });
 
+        btnDenNgay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chonNgayKetThuc();
+            }
+        });
         edtNgayKetThuc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chonNgayKetThuc();
             }
         });
+
         btnTinhDoanhThu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +127,8 @@ public class tongDoanhThu extends AppCompatActivity {
         edtNgayKetThuc = findViewById(R.id.edtNgayKetThuc);
         btnTinhDoanhThu = findViewById(R.id.btnTinhDoanhThu);
         txtTongDoanhThu = findViewById(R.id.txtTongDoanhThu);
+        btnDenNgay = findViewById(R.id.btnDenNgay);
+        btnTuNgay = findViewById(R.id.btnTuNgay);
         phieumuonDAO = new PhieuMuonDAO(this);
     }
 
@@ -146,7 +162,8 @@ public class tongDoanhThu extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.themThanhVien) {
 
                 } else if (item.getItemId() == R.id.doiMatKhau) {
-
+                    Intent intent = new Intent(tongDoanhThu.this, doiMatKhau.class);
+                    startActivity(intent);
                 } else if (item.getItemId() == R.id.dangxuat) {
                     dialog_dangxuat();
                 }
