@@ -32,6 +32,23 @@ public class NguoiDungDao {
         return count > 0;
     }
 
+
+    public void changePassword(String username, String newPassword) {
+        // Lấy tên đăng nhập từ SharedPreferences
+        String loggedInUser = sharedPreferences.getString("loggedInUser", "");
+
+        // Kiểm tra xem người dùng đã đăng nhập hay chưa
+        if (!loggedInUser.isEmpty() && loggedInUser.equals(username)) {
+            database = dbHelper.getWritableDatabase(); // Mở cơ sở dữ liệu cho ghi dữ liệu
+            ContentValues values = new ContentValues();
+            values.put("MATKHAU", newPassword); // Cập nhật mật khẩu mới
+
+            // Thực hiện cập nhật mật khẩu mới cho người dùng có tên đăng nhập tương ứng
+            database.update("user", values, "TENDANGNHAP = ?", new String[]{username});
+            database.close(); // Đóng cơ sở dữ liệu sau khi cập nhật xong
+        }
+    }
+
     public boolean checkPasswordAndChange(String oldPassword, String newPassword) {
         // Thực hiện kiểm tra mật khẩu cũ và username cũ ở đây
         String username = sharedPreferences.getString("loggedInUser", "");
@@ -64,4 +81,8 @@ public class NguoiDungDao {
         database.close();
         return count > 0;
     }
+
+
+
+
 }

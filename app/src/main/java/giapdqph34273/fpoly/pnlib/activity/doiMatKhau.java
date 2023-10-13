@@ -28,7 +28,7 @@ public class doiMatKhau extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private EditText edtMkOld, edtMkNew, edtNhapLai;
+    private EditText edtMkOld,edtMkNew,edtNhapLai;
     private Button btnLuu;
     private NguoiDungDao nguoiDungDao;
 
@@ -51,9 +51,9 @@ public class doiMatKhau extends AppCompatActivity {
         String mkc = edtMkOld.getText().toString();
         String mkm = edtMkNew.getText().toString();
         String nhaplai = edtNhapLai.getText().toString();
-        if (mkc.isEmpty() || mkm.isEmpty() || nhaplai.isEmpty()) {
+        if (mkc.isEmpty()||mkm.isEmpty()||nhaplai.isEmpty()){
             Toast.makeText(doiMatKhau.this, "Không được để trống", Toast.LENGTH_SHORT).show();
-        } else if (mkm.equals(nhaplai)) {
+        }else{
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(doiMatKhau.this);
             builder.setIcon(R.drawable.baseline_question_mark_24);
             builder.setCancelable(false);
@@ -62,24 +62,33 @@ public class doiMatKhau extends AppCompatActivity {
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if (nguoiDungDao.checkPasswordAndChange(mkc, mkm)) {
-                        Toast.makeText(doiMatKhau.this, "Đổi thành công", Toast.LENGTH_SHORT).show();
-                        edtMkNew.setText("");
-                        edtMkOld.setText("");
-                        edtNhapLai.setText("");
-                    } else {
-                        Toast.makeText(doiMatKhau.this, "Mật khẩu cũ sai", Toast.LENGTH_SHORT).show();
+                    if (mkm.equals(nhaplai)){
+                        if (nguoiDungDao.checkPasswordAndChange(mkc,mkm)){
+                            Toast.makeText(doiMatKhau.this, "Đổi thành công", Toast.LENGTH_SHORT).show();
+                            edtMkNew.setText("");
+                            edtMkOld.setText("");
+                            edtNhapLai.setText("");
+
+                            dialog.dismiss();
+                        }else{
+                            Toast.makeText(doiMatKhau.this, "Mật khẩu cũ sai", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    }else {
+                        Toast.makeText(doiMatKhau.this, "Nhập lại mật khẩu sai", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
+
                 }
             });
             builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    // bắt sự kiện nhấn nút No
+                    dialog.dismiss();
                 }
             });
             builder.show();
-        } else {
-            Toast.makeText(doiMatKhau.this, "Nhập lại mật khẩu sai", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -94,7 +103,6 @@ public class doiMatKhau extends AppCompatActivity {
         btnLuu = findViewById(R.id.btnLuu);
         nguoiDungDao = new NguoiDungDao(this);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -102,7 +110,6 @@ public class doiMatKhau extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -142,7 +149,6 @@ public class doiMatKhau extends AppCompatActivity {
             }
         });
     }
-
     public void dialog_dangxuat() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.drawable.baseline_question_mark_24);
@@ -159,7 +165,7 @@ public class doiMatKhau extends AppCompatActivity {
                 editor.apply();
                 Intent intent = new Intent(doiMatKhau.this, dangNhap.class);
 
-                // Đặt cờ FLAG_ACTIVITY_NEW_TASK để tạo một nhiệm vụ mới và loại bỏ tất cả các nhiệm vụ trước đó
+                // Đặt cờ FLAG_ACTIVITY_NEW_TASK để tạo một nhiệm vụ mới
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                 startActivity(intent);
