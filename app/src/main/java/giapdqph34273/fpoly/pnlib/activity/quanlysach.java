@@ -182,7 +182,7 @@ public class quanlysach extends AppCompatActivity {
                     Intent intent = new Intent(quanlysach.this, Top10Sach.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.themThanhVien) {
-
+                    Toast.makeText(quanlysach.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
                 } else if (item.getItemId() == R.id.doiMatKhau) {
                     Intent intent = new Intent(quanlysach.this, doiMatKhau.class);
                     startActivity(intent);

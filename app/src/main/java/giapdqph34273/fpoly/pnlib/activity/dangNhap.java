@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ public class dangNhap extends AppCompatActivity {
     EditText txtUser, txtPass;
     Button btnDangnhap, btnHuy;
     NguoiDungDao nguoiDungDao;
+    CheckBox chkRemember;
 
 
     @Override
@@ -27,6 +29,18 @@ public class dangNhap extends AppCompatActivity {
         setContentView(R.layout.activity_dang_nhap);
 
         anhxa();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+        String savedUsername = sharedPreferences.getString("loggedInUser", "");
+        String savedPassword = sharedPreferences.getString("loggedInPass", "");
+
+        if (!savedUsername.isEmpty() && !savedPassword.isEmpty()) {
+            // Đã có username và mật khẩu đã lưu trước đó
+            // Gán username và mật khẩu vào EditText hoặc tự động đăng nhập
+            txtUser.setText(savedUsername);
+            txtPass.setText(savedPassword);
+            chkRemember.setChecked(true);
+        }
 
         btnDangnhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,11 +53,19 @@ public class dangNhap extends AppCompatActivity {
                 }
                 if (nguoiDungDao.checkUser(user, pass)) {
                     // Lưu tên đăng nhập vào SharedPreferences khi đăng nhập thành công
-                    SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("loggedInUser", user); // Lưu tên đăng nhập
-                    editor.apply();
-
+                    if (chkRemember.isChecked()){
+                        SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("loggedInUser", user); // Lưu tên đăng nhập
+                        editor.putString("loggedInPass", pass); // Lưu tên đăng nhập
+                        editor.apply();
+                    }else{
+                        SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.remove("loggedInUser");
+                        editor.remove("loggedInPass");
+                        editor.apply();
+                    }
                     Toast.makeText(dangNhap.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(dangNhap.this, quanlyphieumuon.class);
                     startActivity(intent);
@@ -51,6 +73,19 @@ public class dangNhap extends AppCompatActivity {
                 } else {
                     Toast.makeText(dangNhap.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
                 }
+
+
+
+            }
+        });
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Đóng màn hình hiện tại
+                finish();
+
+                // Đóng ứng dụng
+                System.exit(0);
             }
         });
 
@@ -61,6 +96,7 @@ public class dangNhap extends AppCompatActivity {
         txtPass = findViewById(R.id.txtPass);
         btnDangnhap = findViewById(R.id.btnDangnhap);
         btnHuy = findViewById(R.id.btnHuy);
+        chkRemember = findViewById(R.id.chkRemember);
         nguoiDungDao = new NguoiDungDao(dangNhap.this);
     }
 

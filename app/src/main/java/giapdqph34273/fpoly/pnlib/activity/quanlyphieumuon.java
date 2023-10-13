@@ -238,7 +238,7 @@ public class quanlyphieumuon extends AppCompatActivity {
                     Intent intent = new Intent(quanlyphieumuon.this, tongDoanhThu.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.themThanhVien) {
-
+                    Toast.makeText(quanlyphieumuon.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
                 } else if (item.getItemId() == R.id.doiMatKhau) {
                     Intent intent = new Intent(quanlyphieumuon.this, doiMatKhau.class);
                     startActivity(intent);

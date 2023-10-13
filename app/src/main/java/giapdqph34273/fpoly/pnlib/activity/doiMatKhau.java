@@ -139,7 +139,7 @@ public class doiMatKhau extends AppCompatActivity {
                     Intent intent = new Intent(doiMatKhau.this, tongDoanhThu.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.themThanhVien) {
-
+                    Toast.makeText(doiMatKhau.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
                 } else if (item.getItemId() == R.id.doiMatKhau) {
                     drawerLayout.close();
                 } else if (item.getItemId() == R.id.dangxuat) {

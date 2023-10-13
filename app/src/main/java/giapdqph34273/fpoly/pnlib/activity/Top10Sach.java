@@ -16,6 +16,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -92,7 +93,7 @@ public class Top10Sach extends AppCompatActivity {
                     Intent intent = new Intent(Top10Sach.this, tongDoanhThu.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.themThanhVien) {
-
+                    Toast.makeText(Top10Sach.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
                 } else if (item.getItemId() == R.id.doiMatKhau) {
                     Intent intent = new Intent(Top10Sach.this, tongDoanhThu.class);
                     startActivity(intent);

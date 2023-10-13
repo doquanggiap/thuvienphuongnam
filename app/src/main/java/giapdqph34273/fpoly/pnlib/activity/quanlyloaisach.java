@@ -145,7 +145,7 @@ public class quanlyloaisach extends AppCompatActivity {
                     Intent intent = new Intent(quanlyloaisach.this, tongDoanhThu.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.themThanhVien) {
-
+                    Toast.makeText(quanlyloaisach.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
                 } else if (item.getItemId() == R.id.doiMatKhau) {
                     Intent intent = new Intent(quanlyloaisach.this, doiMatKhau.class);
                     startActivity(intent);

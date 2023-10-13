@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -160,7 +161,7 @@ public class tongDoanhThu extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.doanhthu) {
                     drawerLayout.close();
                 } else if (item.getItemId() == R.id.themThanhVien) {
-
+                    Toast.makeText(tongDoanhThu.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
                 } else if (item.getItemId() == R.id.doiMatKhau) {
                     Intent intent = new Intent(tongDoanhThu.this, doiMatKhau.class);
                     startActivity(intent);

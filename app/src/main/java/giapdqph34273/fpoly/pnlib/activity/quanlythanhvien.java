@@ -164,7 +164,7 @@ public class quanlythanhvien extends AppCompatActivity {
                     Intent intent = new Intent(quanlythanhvien.this, Top10Sach.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.themThanhVien) {
-
+                    Toast.makeText(quanlythanhvien.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
                 } else if (item.getItemId() == R.id.doiMatKhau) {
                     Intent intent = new Intent(quanlythanhvien.this, doiMatKhau.class);
                     startActivity(intent);
