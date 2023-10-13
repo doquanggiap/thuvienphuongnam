@@ -18,15 +18,27 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         // người sử dụng
-        String createTableUser = "CREATE TABLE user(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+        String createTableAdmin = "CREATE TABLE admin(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "TENDANGNHAP TEXT," +
                 "HOTEN TEXT," +
                 "MATKHAU TEXT)";
-        db.execSQL(createTableUser);// truy vấn
-        String dsnd = "INSERT INTO user (TENDANGNHAP, HOTEN, MATKHAU) VALUES" +
+        db.execSQL(createTableAdmin);// truy vấn
+        String dsnd = "INSERT INTO admin (TENDANGNHAP, HOTEN, MATKHAU) VALUES" +
                 "('admin','Đỗ Quang Giáp','admin')," +
                 "('123','Đỗ Quang Giáp','123')";
         db.execSQL(dsnd);
+
+        // thủ thư
+        String createTableThuThu = "CREATE TABLE thuthu(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "TENDANGNHAP TEXT," +
+                "HOTEN TEXT," +
+                "MATKHAU TEXT)";
+        db.execSQL(createTableThuThu);// truy vấn
+        String dstt = "INSERT INTO thuthu (TENDANGNHAP, HOTEN, MATKHAU) VALUES" +
+                "('thuthu','Nguyễn Văn Toàn','thuthu')," +
+                "('cr7','Cristiano Ronaldo','cr7')," +
+                "('m10','Lionel Messi','m10')";
+        db.execSQL(dstt);
 
         // phiếu mượn
         String createTablePM = "CREATE TABLE PM(ID INTEGER PRIMARY KEY AUTOINCREMENT," +

@@ -28,12 +28,10 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-import giapdqph34273.fpoly.pnlib.DAO.LoaiSachDAO;
+import giapdqph34273.fpoly.pnlib.DAO.AdminDao;
 import giapdqph34273.fpoly.pnlib.DAO.ThanhVienDAO;
 import giapdqph34273.fpoly.pnlib.R;
-import giapdqph34273.fpoly.pnlib.adapter.LoaiSachAdapter;
 import giapdqph34273.fpoly.pnlib.adapter.ThanhVienAdapter;
-import giapdqph34273.fpoly.pnlib.model.LoaiSach;
 import giapdqph34273.fpoly.pnlib.model.ThanhVien;
 
 public class quanlythanhvien extends AppCompatActivity {
@@ -45,6 +43,8 @@ public class quanlythanhvien extends AppCompatActivity {
     ThanhVienDAO thanhVienDAO;
     private ArrayList<ThanhVien> list;
     private ThanhVienAdapter thanhVienAdapter;
+    private AdminDao adminDao;
+
 
 
 
@@ -84,12 +84,11 @@ public class quanlythanhvien extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         EditText edtTenTV,edtNamSinh;
-        Button btnAdd,btnHuy;
+        Button btnAdd;
 
         edtTenTV = view.findViewById(R.id.edtTenTV);
         edtNamSinh = view.findViewById(R.id.edtNamSinh);
         btnAdd = view.findViewById(R.id.btnAdd);
-        btnHuy = view.findViewById(R.id.btnHuy);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +127,7 @@ public class quanlythanhvien extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         toolbar = findViewById(R.id.my_toolbar);
         navigationView = findViewById(R.id.navigationView);
+        adminDao = new AdminDao(this);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -163,8 +163,19 @@ public class quanlythanhvien extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.doanhthu) {
                     Intent intent = new Intent(quanlythanhvien.this, Top10Sach.class);
                     startActivity(intent);
-                } else if (item.getItemId() == R.id.themThanhVien) {
-                    Toast.makeText(quanlythanhvien.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
+                } else if (item.getItemId() == R.id.themNguoiDung) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+                    String loggedInUser = sharedPreferences.getString("loggedInUser", "");
+                    String loggedInPass = sharedPreferences.getString("loggedInPass", "");
+
+                    if (adminDao.checkUser(loggedInUser,loggedInPass)) {
+                        // Người dùng có quyền admin
+                        // Cho phép họ truy cập chức năng thêm thành viên
+                        Toast.makeText(getApplicationContext(), "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Người dùng không có quyền admin
+                        Toast.makeText(getApplicationContext(), "Bạn không có quyền truy cập chức năng này.", Toast.LENGTH_SHORT).show();
+                    }
                 } else if (item.getItemId() == R.id.doiMatKhau) {
                     Intent intent = new Intent(quanlythanhvien.this, doiMatKhau.class);
                     startActivity(intent);

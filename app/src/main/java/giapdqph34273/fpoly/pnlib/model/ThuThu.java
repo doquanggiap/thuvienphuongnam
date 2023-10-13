@@ -1,13 +1,13 @@
 package giapdqph34273.fpoly.pnlib.model;
 
-public class NguoiDung {
+public class ThuThu {
     private String id;
-    private String tenDangNhap;
+    private String tenTT;
     private String hoTen;
     private String matKhau;
 
-    public NguoiDung(String tenDangNhap, String hoTen, String matKhau) {
-        this.tenDangNhap = tenDangNhap;
+    public ThuThu(String tenTT, String hoTen, String matKhau) {
+        this.tenTT = tenTT;
         this.hoTen = hoTen;
         this.matKhau = matKhau;
     }
@@ -20,12 +20,12 @@ public class NguoiDung {
         this.id = id;
     }
 
-    public String getTenDangNhap() {
-        return tenDangNhap;
+    public String getTenTT() {
+        return tenTT;
     }
 
-    public void setTenDangNhap(String tenDangNhap) {
-        this.tenDangNhap = tenDangNhap;
+    public void setTenTT(String tenTT) {
+        this.tenTT = tenTT;
     }
 
     public String getHoTen() {

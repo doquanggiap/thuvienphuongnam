@@ -21,16 +21,19 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-import giapdqph34273.fpoly.pnlib.DAO.NguoiDungDao;
+import giapdqph34273.fpoly.pnlib.DAO.AdminDao;
+import giapdqph34273.fpoly.pnlib.DAO.ThuThuDAO;
 import giapdqph34273.fpoly.pnlib.R;
 
 public class doiMatKhau extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private EditText edtMkOld,edtMkNew,edtNhapLai;
+    private EditText edtMkOld, edtMkNew, edtNhapLai;
     private Button btnLuu;
-    private NguoiDungDao nguoiDungDao;
+    private AdminDao adminDao;
+    private ThuThuDAO thuThuDAO;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,9 @@ public class doiMatKhau extends AppCompatActivity {
 
         anhxa();
         setUpToolbar();
+
+
+
         btnLuu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,9 +57,9 @@ public class doiMatKhau extends AppCompatActivity {
         String mkc = edtMkOld.getText().toString();
         String mkm = edtMkNew.getText().toString();
         String nhaplai = edtNhapLai.getText().toString();
-        if (mkc.isEmpty()||mkm.isEmpty()||nhaplai.isEmpty()){
+        if (mkc.isEmpty() || mkm.isEmpty() || nhaplai.isEmpty()) {
             Toast.makeText(doiMatKhau.this, "Không được để trống", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(doiMatKhau.this);
             builder.setIcon(R.drawable.baseline_question_mark_24);
             builder.setCancelable(false);
@@ -62,21 +68,22 @@ public class doiMatKhau extends AppCompatActivity {
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if (mkm.equals(nhaplai)){
-                        if (nguoiDungDao.checkPasswordAndChange(mkc,mkm)){
+                    if (mkm.equals(nhaplai)) {
+                        if (adminDao.checkPasswordAndChange(mkc, mkm)) {
                             Toast.makeText(doiMatKhau.this, "Đổi thành công", Toast.LENGTH_SHORT).show();
                             edtMkNew.setText("");
                             edtMkOld.setText("");
                             edtNhapLai.setText("");
-
-                            dialog.dismiss();
-                        }else{
+                        } else if (thuThuDAO.doiMKTT(mkc, mkm)) {
+                            Toast.makeText(doiMatKhau.this, "Đổi thành công", Toast.LENGTH_SHORT).show();
+                            edtMkNew.setText("");
+                            edtMkOld.setText("");
+                            edtNhapLai.setText("");
+                        } else {
                             Toast.makeText(doiMatKhau.this, "Mật khẩu cũ sai", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
                         }
-                    }else {
+                    } else {
                         Toast.makeText(doiMatKhau.this, "Nhập lại mật khẩu sai", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
                     }
 
                 }
@@ -101,8 +108,10 @@ public class doiMatKhau extends AppCompatActivity {
         edtMkNew = findViewById(R.id.edtMkNew);
         edtNhapLai = findViewById(R.id.edtNhapLai);
         btnLuu = findViewById(R.id.btnLuu);
-        nguoiDungDao = new NguoiDungDao(this);
+        adminDao = new AdminDao(this);
+        thuThuDAO = new ThuThuDAO(this);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -110,6 +119,7 @@ public class doiMatKhau extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -138,8 +148,21 @@ public class doiMatKhau extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.doanhthu) {
                     Intent intent = new Intent(doiMatKhau.this, tongDoanhThu.class);
                     startActivity(intent);
-                } else if (item.getItemId() == R.id.themThanhVien) {
-                    Toast.makeText(doiMatKhau.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
+                } else if (item.getItemId() == R.id.themNguoiDung) {
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+                    String loggedInUser = sharedPreferences.getString("loggedInUser", "");
+                    String loggedInPass = sharedPreferences.getString("loggedInPass", "");
+
+                    if (adminDao.checkUser(loggedInUser,loggedInPass)) {
+                        // Người dùng có quyền admin
+                        // Cho phép họ truy cập chức năng thêm thành viên
+                        Toast.makeText(doiMatKhau.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Người dùng không có quyền admin
+                        Toast.makeText(doiMatKhau.this, "Bạn không có quyền truy cập chức năng này.", Toast.LENGTH_SHORT).show();
+                    }
+
                 } else if (item.getItemId() == R.id.doiMatKhau) {
                     drawerLayout.close();
                 } else if (item.getItemId() == R.id.dangxuat) {
@@ -149,6 +172,7 @@ public class doiMatKhau extends AppCompatActivity {
             }
         });
     }
+
     public void dialog_dangxuat() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.drawable.baseline_question_mark_24);

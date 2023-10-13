@@ -29,6 +29,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
 import giapdqph34273.fpoly.pnlib.DAO.LoaiSachDAO;
+import giapdqph34273.fpoly.pnlib.DAO.AdminDao;
 import giapdqph34273.fpoly.pnlib.R;
 import giapdqph34273.fpoly.pnlib.adapter.LoaiSachAdapter;
 import giapdqph34273.fpoly.pnlib.model.LoaiSach;
@@ -42,6 +43,7 @@ public class quanlyloaisach extends AppCompatActivity {
     private LoaiSachDAO loaiSachDAO;
     private ArrayList<LoaiSach> list;
     private LoaiSachAdapter loaiSachAdapter;
+    private AdminDao adminDao;
 
 
     @Override
@@ -144,8 +146,19 @@ public class quanlyloaisach extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.doanhthu) {
                     Intent intent = new Intent(quanlyloaisach.this, tongDoanhThu.class);
                     startActivity(intent);
-                } else if (item.getItemId() == R.id.themThanhVien) {
-                    Toast.makeText(quanlyloaisach.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
+                } else if (item.getItemId() == R.id.themNguoiDung) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+                    String loggedInUser = sharedPreferences.getString("loggedInUser", "");
+                    String loggedInPass = sharedPreferences.getString("loggedInPass", "");
+
+                    if (adminDao.checkUser(loggedInUser,loggedInPass)) {
+                        // Người dùng có quyền admin
+                        // Cho phép họ truy cập chức năng thêm thành viên
+                        Toast.makeText(quanlyloaisach.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Người dùng không có quyền admin
+                        Toast.makeText(quanlyloaisach.this, "Bạn không có quyền truy cập chức năng này.", Toast.LENGTH_SHORT).show();
+                    }
                 } else if (item.getItemId() == R.id.doiMatKhau) {
                     Intent intent = new Intent(quanlyloaisach.this, doiMatKhau.class);
                     startActivity(intent);
@@ -171,6 +184,7 @@ public class quanlyloaisach extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         toolbar = findViewById(R.id.my_toolbar);
         navigationView = findViewById(R.id.navigationView);
+        adminDao = new AdminDao(this);
     }
     public void dialog_dangxuat() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

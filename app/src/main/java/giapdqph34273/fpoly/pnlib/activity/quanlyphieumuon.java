@@ -22,7 +22,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -32,6 +31,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import giapdqph34273.fpoly.pnlib.DAO.AdminDao;
 import giapdqph34273.fpoly.pnlib.DAO.PhieuMuonDAO;
 import giapdqph34273.fpoly.pnlib.DAO.SachDAO;
 import giapdqph34273.fpoly.pnlib.DAO.ThanhVienDAO;
@@ -50,6 +50,7 @@ public class quanlyphieumuon extends AppCompatActivity {
     PhieuMuonDAO phieuMuonDAO;
     ArrayList<PhieuMuon> list;
     PhieuMuonAdapter phieuMuonAdapter;
+    AdminDao adminDao;
 
 
     @Override
@@ -57,11 +58,7 @@ public class quanlyphieumuon extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quanlyphieumuon);
 
-        recyclerView = findViewById(R.id.recycleView);
-        btnThem = findViewById(R.id.btnThem);
-        drawerLayout = findViewById(R.id.drawerLayout);
-        toolbar = findViewById(R.id.my_toolbar);
-        navigationView = findViewById(R.id.navigationView);
+        anhxa();
         setUpToolbar();
 
         phieuMuonDAO = new PhieuMuonDAO(this);
@@ -78,6 +75,15 @@ public class quanlyphieumuon extends AppCompatActivity {
                 dialog_them();
             }
         });
+    }
+
+    private void anhxa() {
+        recyclerView = findViewById(R.id.recycleView);
+        btnThem = findViewById(R.id.btnThem);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        toolbar = findViewById(R.id.my_toolbar);
+        navigationView = findViewById(R.id.navigationView);
+        adminDao = new AdminDao(this);
     }
 
     public void dialog_them() {
@@ -237,8 +243,19 @@ public class quanlyphieumuon extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.doanhthu) {
                     Intent intent = new Intent(quanlyphieumuon.this, tongDoanhThu.class);
                     startActivity(intent);
-                } else if (item.getItemId() == R.id.themThanhVien) {
-                    Toast.makeText(quanlyphieumuon.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
+                } else if (item.getItemId() == R.id.themNguoiDung) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+                    String loggedInUser = sharedPreferences.getString("loggedInUser", "");
+                    String loggedInPass = sharedPreferences.getString("loggedInPass", "");
+
+                    if (adminDao.checkUser(loggedInUser,loggedInPass)) {
+                        // Người dùng có quyền admin
+                        // Cho phép họ truy cập chức năng thêm thành viên
+                        Intent intent = new Intent(quanlyphieumuon.this, themthuthu.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(quanlyphieumuon.this, "Bạn không có quyền truy cập chức năng này.", Toast.LENGTH_SHORT).show();
+                    }
                 } else if (item.getItemId() == R.id.doiMatKhau) {
                     Intent intent = new Intent(quanlyphieumuon.this, doiMatKhau.class);
                     startActivity(intent);

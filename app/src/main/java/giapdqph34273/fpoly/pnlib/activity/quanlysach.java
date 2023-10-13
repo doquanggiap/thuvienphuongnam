@@ -31,6 +31,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
 import giapdqph34273.fpoly.pnlib.DAO.LoaiSachDAO;
+import giapdqph34273.fpoly.pnlib.DAO.AdminDao;
 import giapdqph34273.fpoly.pnlib.DAO.SachDAO;
 import giapdqph34273.fpoly.pnlib.R;
 import giapdqph34273.fpoly.pnlib.adapter.SachAdapter;
@@ -46,6 +47,7 @@ public class quanlysach extends AppCompatActivity {
     private SachDAO sachDAO;
     private ArrayList<Sach> list;
     private SachAdapter sachAdapter;
+    private AdminDao adminDao;
 
 
     @Override
@@ -154,6 +156,7 @@ public class quanlysach extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         toolbar = findViewById(R.id.my_toolbar);
         navigationView = findViewById(R.id.navigationView);
+        adminDao = new AdminDao(this);
     }
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
@@ -181,8 +184,19 @@ public class quanlysach extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.doanhthu) {
                     Intent intent = new Intent(quanlysach.this, Top10Sach.class);
                     startActivity(intent);
-                } else if (item.getItemId() == R.id.themThanhVien) {
-                    Toast.makeText(quanlysach.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
+                } else if (item.getItemId() == R.id.themNguoiDung) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+                    String loggedInUser = sharedPreferences.getString("loggedInUser", "");
+                    String loggedInPass = sharedPreferences.getString("loggedInPass", "");
+
+                    if (adminDao.checkUser(loggedInUser,loggedInPass)) {
+                        // Người dùng có quyền admin
+                        // Cho phép họ truy cập chức năng thêm thành viên
+                        Toast.makeText(getApplicationContext(), "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Người dùng không có quyền admin
+                        Toast.makeText(getApplicationContext(), "Bạn không có quyền truy cập chức năng này.", Toast.LENGTH_SHORT).show();
+                    }
                 } else if (item.getItemId() == R.id.doiMatKhau) {
                     Intent intent = new Intent(quanlysach.this, doiMatKhau.class);
                     startActivity(intent);

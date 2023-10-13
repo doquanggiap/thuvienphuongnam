@@ -28,8 +28,8 @@
     </item>
     <item android:title="Người dùng">
         <menu>
-            <item android:id="@+id/themThanhVien"
-                android:title="Thêm thành viên"
+            <item android:id="@+id/themNguoiDung"
+                android:title="Thêm người dùng"
                 android:icon="@drawable/baseline_add_24"/>
             <item android:id="@+id/doiMatKhau"
                 android:title="Đổi mật khẩu"
