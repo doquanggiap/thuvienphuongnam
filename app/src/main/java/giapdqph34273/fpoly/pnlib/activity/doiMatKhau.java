@@ -157,7 +157,8 @@ public class doiMatKhau extends AppCompatActivity {
                     if (adminDao.checkUser(loggedInUser,loggedInPass)) {
                         // Người dùng có quyền admin
                         // Cho phép họ truy cập chức năng thêm thành viên
-                        Toast.makeText(doiMatKhau.this, "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(doiMatKhau.this, themthuthu.class);
+                        startActivity(intent);
                     } else {
                         // Người dùng không có quyền admin
                         Toast.makeText(doiMatKhau.this, "Bạn không có quyền truy cập chức năng này.", Toast.LENGTH_SHORT).show();

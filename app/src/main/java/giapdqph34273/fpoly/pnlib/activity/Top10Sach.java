@@ -103,7 +103,8 @@ public class Top10Sach extends AppCompatActivity {
                     if (adminDao.checkUser(loggedInUser,loggedInPass)) {
                         // Người dùng có quyền admin
                         // Cho phép họ truy cập chức năng thêm thành viên
-                        Toast.makeText(getApplicationContext(), "Chưa làm chức năng này", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Top10Sach.this, themthuthu.class);
+                        startActivity(intent);
                     } else {
                         // Người dùng không có quyền admin
                         Toast.makeText(getApplicationContext(), "Bạn không có quyền truy cập chức năng này.", Toast.LENGTH_SHORT).show();
