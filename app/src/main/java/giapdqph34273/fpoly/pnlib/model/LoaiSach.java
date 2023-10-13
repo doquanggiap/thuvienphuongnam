@@ -8,6 +8,9 @@ public class LoaiSach {
         this.tenLoai = tenLoai;
     }
 
+    public LoaiSach() {
+    }
+
     public int getId() {
         return id;
     }
