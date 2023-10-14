@@ -54,6 +54,7 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder
         holder.txtTenSach.setText(sach.getTenSach());
         holder.txtTienThue.setText(String.valueOf(sach.getTienThue()));
         holder.txtLoaiSach.setText(sach.getLoaiSach());
+        holder.txtNamXB.setText(String.valueOf(sach.getNamXB()));
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,18 +105,20 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText edtTenSach,edtTienThue;
+        EditText edtTenSach,edtTienThue,edtNamXB;
         Spinner edtTenLoai;
         Button btnSua, btnHuy;
 
         edtTenSach = view.findViewById(R.id.edtTenSach);
         edtTienThue = view.findViewById(R.id.edtTienThue);
         edtTenLoai = view.findViewById(R.id.edtTenLoai);
+        edtNamXB = view.findViewById(R.id.edtNamXB);
         btnSua = view.findViewById(R.id.btnSua);
         btnHuy = view.findViewById(R.id.btnHuy);
 
         edtTenSach.setText(sach.getTenSach());
         edtTienThue.setText(String.valueOf(sach.getTienThue()));
+        edtNamXB.setText(String.valueOf(sach.getNamXB()));
         // Thay đổi dòng này:
 // edtTenLoai.setText(sach.getLoaiSach());
 // Thành dòng này:
@@ -129,20 +132,26 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder
                 String tensach = edtTenSach.getText().toString();
                 String tienthue = edtTienThue.getText().toString();
                 String tenloai = edtTenLoai.getSelectedItem().toString();
+                String namxb = edtNamXB.getText().toString();
 
-                if (tensach.isEmpty()||tienthue.isEmpty()){
+                if (tensach.isEmpty()||tienthue.isEmpty()||namxb.isEmpty()){
                     Toast.makeText(context, "Không được để trống", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (!tienthue.matches("\\d+")){
-                    Toast.makeText(context, "Tiền thuê phải là sô", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Tiền thuê phải là số", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!namxb.matches("\\d+")){
+                    Toast.makeText(context, "Năm xuất bản phải là số", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 sach.setTenSach(tensach);
                 sach.setTienThue(Integer.parseInt(tienthue));
                 sach.setLoaiSach(tenloai);
+                sach.setNamXB(Integer.parseInt(namxb));
 
                 if (sachDAO.updateS(sach)>0){
                     list.clear();
@@ -180,7 +189,7 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder
     }
 
     public static class SachViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTenSach,txtTienThue,txtLoaiSach;
+        TextView txtTenSach,txtTienThue,txtLoaiSach,txtNamXB;
         ImageButton btnDelete;
         public SachViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -188,6 +197,8 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder
             txtTienThue = itemView.findViewById(R.id.txtTienThue);
             txtLoaiSach = itemView.findViewById(R.id.txtLoaiSach);
             btnDelete = itemView.findViewById(R.id.btnDelete);
+            txtNamXB = itemView.findViewById(R.id.txtNamXB);
+
         }
     }
 }

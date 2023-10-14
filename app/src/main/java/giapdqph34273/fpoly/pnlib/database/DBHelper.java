@@ -65,12 +65,13 @@ public class DBHelper extends SQLiteOpenHelper {
         String createTableSach = "CREATE TABLE sach(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "TENSACH TEXT," +
                 "TIENTHUE INTEGER," +
-                "LOAISACH TEXT)";
+                "LOAISACH TEXT," +
+                "NAMXB TEXT)";
         db.execSQL(createTableSach);// truy vấn
 
-        String dss = "INSERT INTO sach(TENSACH,TIENTHUE,LOAISACH) VALUES" +
-                "('Doraemon',1000,'Lập trình')," +
-                "('Photoshop',3000,'Đồ họa')";
+        String dss = "INSERT INTO sach(TENSACH,TIENTHUE,LOAISACH,NAMXB) VALUES" +
+                "('Doraemon',1000,'Lập trình',2000)," +
+                "('Photoshop',3000,'Đồ họa',2013)";
         db.execSQL(dss);
 
         // thành viên

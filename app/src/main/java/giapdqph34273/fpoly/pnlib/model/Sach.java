@@ -5,14 +5,13 @@ public class Sach {
     private String tenSach;
     private int tienThue;
     private String loaiSach;
+    private int namXB;
 
-    public Sach(String tenSach, int tienThue, String loaiSach) {
+    public Sach(String tenSach, int tienThue, String loaiSach, int namXB) {
         this.tenSach = tenSach;
         this.tienThue = tienThue;
         this.loaiSach = loaiSach;
-    }
-
-    public Sach() {
+        this.namXB = namXB;
     }
 
     public int getId() {
@@ -45,5 +44,13 @@ public class Sach {
 
     public void setLoaiSach(String loaiSach) {
         this.loaiSach = loaiSach;
+    }
+
+    public int getNamXB() {
+        return namXB;
+    }
+
+    public void setNamXB(int namXB) {
+        this.namXB = namXB;
     }
 }

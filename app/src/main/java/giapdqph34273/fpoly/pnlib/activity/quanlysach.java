@@ -83,13 +83,14 @@ public class quanlysach extends AppCompatActivity {
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText edtTenSach,edtTienThue;
+        EditText edtTenSach,edtTienThue,edtNamXB;
         Button btnAdd, btnHuy;
         Spinner edtTenLoai;
 
         edtTenSach = view.findViewById(R.id.edtTenSach);
         edtTienThue = view.findViewById(R.id.edtTienThue);
         edtTenLoai = view.findViewById(R.id.edtTenLoai);
+        edtNamXB = view.findViewById(R.id.edtNamXB);
         btnAdd = view.findViewById(R.id.btnAdd);
         btnHuy = view.findViewById(R.id.btnHuy);
 
@@ -108,17 +109,22 @@ public class quanlysach extends AppCompatActivity {
                 String tensach = edtTenSach.getText().toString();
                 String tienthue = edtTienThue.getText().toString();
                 String tenloai = edtTenLoai.getSelectedItem().toString();
+                String namxb = edtNamXB.getText().toString();
 
-                if (tensach.isEmpty()||tienthue.isEmpty()||tenloai.isEmpty()){
+                if (tensach.isEmpty()||tienthue.isEmpty()||namxb.isEmpty()){
                     Toast.makeText(quanlysach.this, "Không được để trống", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (!tienthue.matches("\\d+")){
-                    Toast.makeText(quanlysach.this, "Tiền thuê phải là sô", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(quanlysach.this, "Tiền thuê phải là số", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Sach sach = new Sach(tensach,Integer.parseInt(tienthue),tenloai);
+                if (!namxb.matches("\\d+")){
+                    Toast.makeText(quanlysach.this, "Năm xuất bản phải là số", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Sach sach = new Sach(tensach,Integer.parseInt(tienthue),tenloai,Integer.parseInt(namxb));
 
                 if (sachDAO.addS(sach) > 0) {
                     Toast.makeText(quanlysach.this, "Thêm thành công", Toast.LENGTH_SHORT).show();

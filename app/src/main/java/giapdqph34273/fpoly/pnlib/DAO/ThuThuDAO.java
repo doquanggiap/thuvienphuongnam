@@ -31,7 +31,7 @@ public class ThuThuDAO {
         return database.insert("thuthu", null, values);
     }
 
-    public boolean checkTT(String username, String password) {
+    public boolean checkTT(String username, String password) { // kiểm tra tài khoản có trong bảng thuthu không
         database = dbHelper.getReadableDatabase();
         String[] columns = {"ID"};
         String selection = "TENDANGNHAP" + "=? and " + "MATKHAU" + "=?";
@@ -48,13 +48,13 @@ public class ThuThuDAO {
 
         if (checkTT(username, oldPassword)) {
             // Mật khẩu cũ đúng
-            database = dbHelper.getWritableDatabase(); // Mở cơ sở dữ liệu cho ghi dữ liệu
+            database = dbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put("MATKHAU", newPassword); // Cập nhật mật khẩu mới
 
             // Thực hiện cập nhật mật khẩu mới cho người dùng có tên đăng nhập tương ứng
             database.update("thuthu", values, "TENDANGNHAP = ?", new String[]{username});
-            database.close(); // Đóng cơ sở dữ liệu sau khi cập nhật xong
+            database.close();
             return true; // Trả về true nếu đổi mật khẩu thành công
         } else {
             // Mật khẩu cũ không đúng

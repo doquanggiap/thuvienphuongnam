@@ -26,7 +26,8 @@ public class SachDAO {
             Sach s = new Sach(
                     cursor.getString(1),
                     cursor.getInt(2),
-                    cursor.getString(3)
+                    cursor.getString(3),
+                    cursor.getInt(4)
             );
             s.setId(cursor.getInt(0));
             list.add(s);
@@ -40,6 +41,7 @@ public class SachDAO {
         values.put("TENSACH", sach.getTenSach());
         values.put("TIENTHUE", sach.getTienThue());
         values.put("LOAISACH", sach.getLoaiSach());
+        values.put("NAMXB", sach.getNamXB());
         return database.insert("sach", null, values);
     }
 
@@ -55,6 +57,7 @@ public class SachDAO {
         values.put("TENSACH", sach.getTenSach());
         values.put("TIENTHUE", sach.getTienThue());
         values.put("LOAISACH", sach.getLoaiSach());
+        values.put("NAMXB", sach.getNamXB());
         long check = database.update("sach", values, "ID=?", new String[]{String.valueOf(sach.getId())});
         return check;
     }
