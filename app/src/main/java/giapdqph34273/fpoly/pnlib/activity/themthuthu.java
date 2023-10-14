@@ -96,7 +96,7 @@ public class themthuthu extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu_icon);
-        getSupportActionBar().setTitle("Quản lý loại sách");
+        getSupportActionBar().setTitle("Thêm người dùng");
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

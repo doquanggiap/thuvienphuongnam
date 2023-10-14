@@ -17,7 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        // người sử dụng
+        // admin
         String createTableAdmin = "CREATE TABLE admin(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "TENDANGNHAP TEXT," +
                 "HOTEN TEXT," +

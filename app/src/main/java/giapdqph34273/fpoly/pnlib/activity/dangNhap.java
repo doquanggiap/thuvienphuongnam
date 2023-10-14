@@ -41,6 +41,8 @@ public class dangNhap extends AppCompatActivity {
             // Gán username và mật khẩu vào EditText hoặc tự động đăng nhập
             txtUser.setText(savedUsername);
             txtPass.setText(savedPassword);
+
+            // Cho checkbox Nhớ mật khẩu có dấu tích v
             chkRemember.setChecked(true);
         }
 
