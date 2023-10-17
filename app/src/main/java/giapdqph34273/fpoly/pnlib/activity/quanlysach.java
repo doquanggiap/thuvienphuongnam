@@ -78,7 +78,6 @@ public class quanlysach extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(quanlysach.this);
         View view = getLayoutInflater().inflate(R.layout.item_add_sach, null);
         builder.setView(view);
-        builder.setCancelable(false);
         Dialog dialog = builder.create();
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

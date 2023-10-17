@@ -36,6 +36,7 @@
             android:layout_height="50dp"
             android:background="@drawable/edtdesign"
             android:hint="Nhập tên thành viên"
+            android:inputType="text"
             android:paddingLeft="10dp"
             android:textSize="23sp" />
 
@@ -54,6 +55,7 @@
             android:layout_height="50dp"
             android:background="@drawable/edtdesign"
             android:hint="Nhập năm sinh"
+            android:inputType="text"
             android:paddingLeft="10dp"
             android:textSize="23sp" />
 

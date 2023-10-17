@@ -74,11 +74,20 @@ public class doiMatKhau extends AppCompatActivity {
                             edtMkNew.setText("");
                             edtMkOld.setText("");
                             edtNhapLai.setText("");
+
+                            edtMkNew.setFocusable(false);
+                            edtMkOld.setFocusable(false);
+                            edtNhapLai.setFocusable(false);
+
                         } else if (thuThuDAO.doiMKTT(mkc, mkm)) {
                             Toast.makeText(doiMatKhau.this, "Đổi thành công", Toast.LENGTH_SHORT).show();
                             edtMkNew.setText("");
                             edtMkOld.setText("");
                             edtNhapLai.setText("");
+
+                            edtMkNew.setFocusable(false);
+                            edtMkOld.setFocusable(false);
+                            edtNhapLai.setFocusable(false);
                         } else {
                             Toast.makeText(doiMatKhau.this, "Mật khẩu cũ sai", Toast.LENGTH_SHORT).show();
                         }

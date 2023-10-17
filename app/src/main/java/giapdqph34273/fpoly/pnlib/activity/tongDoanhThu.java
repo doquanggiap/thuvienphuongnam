@@ -80,12 +80,38 @@ public class tongDoanhThu extends AppCompatActivity {
         btnTinhDoanhThu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int tongDoanhThu = phieumuonDAO.getTongDoanhThu(ngayBatDau, ngayKetThuc);
-                txtTongDoanhThu.setText(String.valueOf(tongDoanhThu));
+
+                if (validateNgay()) {
+                    int tongDoanhThu = phieumuonDAO.getTongDoanhThu(ngayBatDau, ngayKetThuc);
+                    txtTongDoanhThu.setText(String.valueOf(tongDoanhThu));
+
+                }
+
             }
         });
 
 
+    }
+
+    private boolean validateNgay() {
+        String ngaydau = edtNgayBatDau.getText().toString();
+        String ngaycuoi = edtNgayKetThuc.getText().toString();
+
+        if (ngaydau.isEmpty() && ngaycuoi.isEmpty()) {
+            Toast.makeText(tongDoanhThu.this, "Chưa chọn ngày", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (ngaydau.isEmpty()) {
+            Toast.makeText(tongDoanhThu.this, "Chưa chọn ngày bắt đầu", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (ngaycuoi.isEmpty()) {
+            Toast.makeText(tongDoanhThu.this, "Chưa chọn ngày kết thúc", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private void chonNgayKetThuc() {
@@ -168,7 +194,7 @@ public class tongDoanhThu extends AppCompatActivity {
                     String loggedInUser = sharedPreferences.getString("loggedInUser", "");
                     String loggedInPass = sharedPreferences.getString("loggedInPass", "");
 
-                    if (adminDao.checkUser(loggedInUser,loggedInPass)) {
+                    if (adminDao.checkUser(loggedInUser, loggedInPass)) {
                         // Người dùng có quyền admin
                         // Cho phép họ truy cập chức năng thêm thành viên
                         Intent intent = new Intent(tongDoanhThu.this, themthuthu.class);

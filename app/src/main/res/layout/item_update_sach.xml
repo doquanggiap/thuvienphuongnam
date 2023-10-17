@@ -36,8 +36,10 @@
             android:layout_height="50dp"
             android:background="@drawable/edtdesign"
             android:hint="Nhập tên sách"
+            android:inputType="text"
             android:paddingLeft="10dp"
             android:textSize="23sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,8 +55,10 @@
             android:layout_height="50dp"
             android:background="@drawable/edtdesign"
             android:hint="Nhập tiền thuê"
+            android:inputType="text"
             android:paddingLeft="10dp"
             android:textSize="23sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +75,8 @@
             android:background="@drawable/edtdesign"
             android:hint="Nhập loại sách"
             android:paddingLeft="10dp"
-            android:textSize="23sp"/>
+            android:textSize="23sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,6 +92,7 @@
             android:layout_height="50dp"
             android:background="@drawable/edtdesign"
             android:hint="Nhập năm xuất bản"
+            android:inputType="text"
             android:paddingLeft="10dp"
             android:textSize="23sp" />
 

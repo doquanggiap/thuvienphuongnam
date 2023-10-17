@@ -73,6 +73,12 @@ public class themthuthu extends AppCompatActivity {
                     edtPass.setText("");
                     edtNhapLai.setText("");
 
+                    edtHoten.setFocusable(false);
+                    edtUser.setFocusable(false);
+                    edtPass.setFocusable(false);
+                    edtNhapLai.setFocusable(false);
+
+
                 }else {
                     Toast.makeText(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
                 }

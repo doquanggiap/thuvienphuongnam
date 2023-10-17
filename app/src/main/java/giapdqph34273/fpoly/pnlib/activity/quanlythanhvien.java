@@ -78,7 +78,6 @@ public class quanlythanhvien extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(quanlythanhvien.this);
         View view = getLayoutInflater().inflate(R.layout.item_add_thanhvien, null);
         builder.setView(view);
-        builder.setCancelable(false);
         Dialog dialog = builder.create();
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -140,7 +139,7 @@ public class quanlythanhvien extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu_icon);
-        getSupportActionBar().setTitle("Quản lý loại sách");
+        getSupportActionBar().setTitle("Quản lý thành viên");
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
