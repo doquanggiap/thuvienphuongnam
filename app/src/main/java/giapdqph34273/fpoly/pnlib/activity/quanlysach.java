@@ -3,6 +3,7 @@ package giapdqph34273.fpoly.pnlib.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +19,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -48,6 +51,7 @@ public class quanlysach extends AppCompatActivity {
     private ArrayList<Sach> list;
     private SachAdapter sachAdapter;
     private AdminDao adminDao;
+    private SearchView searchView;
 
 
     @Override
@@ -169,6 +173,7 @@ public class quanlysach extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu_icon);
         getSupportActionBar().setTitle("Quản lý sách");
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -208,6 +213,8 @@ public class quanlysach extends AppCompatActivity {
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.dangxuat) {
                     dialog_dangxuat();
+                } else if (item.getItemId() == R.id.action_search) {
+                    
                 }
                 return false;
             }
@@ -220,6 +227,30 @@ public class quanlysach extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                sachAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                sachAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
+    }
+
     public void dialog_dangxuat() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.drawable.baseline_question_mark_24);
@@ -252,4 +283,12 @@ public class quanlysach extends AppCompatActivity {
         builder.show();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!searchView.isIconified()){
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
+    }
 }

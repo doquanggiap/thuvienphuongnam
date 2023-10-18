@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,14 +31,16 @@ import giapdqph34273.fpoly.pnlib.R;
 import giapdqph34273.fpoly.pnlib.model.LoaiSach;
 import giapdqph34273.fpoly.pnlib.model.Sach;
 
-public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder> {
+public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder> implements Filterable {
     private Context context;
-    private ArrayList<Sach> list;
+    private ArrayList<Sach> list,listOld;
+
     SachDAO sachDAO;
 
     public SachAdapter(Context context, ArrayList<Sach> list) {
         this.context = context;
         this.list = list;
+        this.listOld = list;
         sachDAO = new SachDAO(context);
     }
 
@@ -185,6 +189,36 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachViewHolder
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String strSearch = constraint.toString();
+                if (strSearch.isEmpty()){
+                    list = listOld;
+                }else{
+                    ArrayList<Sach> listSearch = new ArrayList<>();
+                    for (Sach sach: listOld){
+                        if (sach.getTenSach().toLowerCase().contains(strSearch.toLowerCase())){
+                            listSearch.add(sach);
+                        }
+                    }
+                    list = listSearch;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = list;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                list = (ArrayList<Sach>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public static class SachViewHolder extends RecyclerView.ViewHolder {
