@@ -6,4 +6,15 @@
         android:icon="@drawable/search"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
+
+    <item
+        android:id="@+id/asc"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_asc"
+        android:title="Tăng dần"/>
+    <item
+        android:id="@+id/desc"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_desc"
+        android:title="Giảm dần"/>
 </menu>

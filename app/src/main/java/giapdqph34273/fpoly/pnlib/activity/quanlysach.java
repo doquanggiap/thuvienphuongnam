@@ -26,12 +26,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import giapdqph34273.fpoly.pnlib.DAO.LoaiSachDAO;
 import giapdqph34273.fpoly.pnlib.DAO.AdminDao;
@@ -48,7 +51,7 @@ public class quanlysach extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private SachDAO sachDAO;
-    private ArrayList<Sach> list;
+    private ArrayList<Sach> list,list1;
     private SachAdapter sachAdapter;
     private AdminDao adminDao;
     private SearchView searchView;
@@ -69,6 +72,9 @@ public class quanlysach extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(sachAdapter);
+
+
+
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,8 +219,6 @@ public class quanlysach extends AppCompatActivity {
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.dangxuat) {
                     dialog_dangxuat();
-                } else if (item.getItemId() == R.id.action_search) {
-                    
                 }
                 return false;
             }
@@ -224,8 +228,32 @@ public class quanlysach extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
+        } else if (item.getItemId() == R.id.asc) {
+            sortBooksByNameAscending();
+            return true;
+        } else if (item.getItemId() == R.id.desc) {
+            sortBooksByNameDescending();
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void sortBooksByNameDescending() {
+        Collections.sort(list, new Comparator<Sach>() {
+            @Override
+            public int compare(Sach sach1, Sach sach2) {
+                return sach2.getTenSach().toLowerCase().compareTo(sach1.getTenSach().toLowerCase());
+            }
+        });
+        sachAdapter.notifyDataSetChanged();
+    }
+    private void sortBooksByNameAscending() {
+        Collections.sort(list, new Comparator<Sach>() {
+            @Override
+            public int compare(Sach sach1, Sach sach2) {
+                return sach1.getTenSach().toLowerCase().compareTo(sach2.getTenSach().toLowerCase());
+            }
+        });
+        sachAdapter.notifyDataSetChanged();
     }
 
     @Override
