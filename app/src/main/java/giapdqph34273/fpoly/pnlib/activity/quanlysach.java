@@ -26,7 +26,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -51,7 +50,7 @@ public class quanlysach extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private SachDAO sachDAO;
-    private ArrayList<Sach> list,list1;
+    private ArrayList<Sach> list;
     private SachAdapter sachAdapter;
     private AdminDao adminDao;
     private SearchView searchView;
@@ -205,7 +204,7 @@ public class quanlysach extends AppCompatActivity {
                     String loggedInUser = sharedPreferences.getString("loggedInUser", "");
                     String loggedInPass = sharedPreferences.getString("loggedInPass", "");
 
-                    if (adminDao.checkUser(loggedInUser,loggedInPass)) {
+                    if (adminDao.checkAdmin(loggedInUser,loggedInPass)) {
                         // Người dùng có quyền admin
                         // Cho phép họ truy cập chức năng thêm thành viên
                         Intent intent = new Intent(quanlysach.this, themthuthu.class);

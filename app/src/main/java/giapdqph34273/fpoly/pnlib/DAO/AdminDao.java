@@ -20,7 +20,7 @@ public class AdminDao {
         sharedPreferences = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
     }
 
-    public boolean checkUser(String username, String password) { // kiểm tra tài khoản có trong bảng admin không
+    public boolean checkAdmin(String username, String password) { // kiểm tra tài khoản có trong bảng admin không
         database = dbHelper.getReadableDatabase();
         String[] columns = {"ID"};
         String selection = "TENDANGNHAP" + "=? and " + "MATKHAU" + "=?";
@@ -36,7 +36,7 @@ public class AdminDao {
         // Thực hiện kiểm tra mật khẩu cũ và username cũ ở đây
         String username = sharedPreferences.getString("loggedInUser", "");
 
-        if (checkUser(username, oldPassword)) {
+        if (checkAdmin(username, oldPassword)) {
             // Mật khẩu cũ đúng
             database = dbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();

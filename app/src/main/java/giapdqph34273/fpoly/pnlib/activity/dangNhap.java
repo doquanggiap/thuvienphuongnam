@@ -55,45 +55,10 @@ public class dangNhap extends AppCompatActivity {
                     Toast.makeText(dangNhap.this, "Không được để trống thông tin", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (adminDao.checkUser(user, pass)) {
-                    // Lưu tên đăng nhập vào SharedPreferences khi đăng nhập thành công
-                    if (chkRemember.isChecked()){
-                        SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("loggedInUser", user); // Lưu tên đăng nhập
-                        editor.putString("loggedInPass", pass); // Lưu tên đăng nhập
-                        editor.apply();
-                    }
-                    else{
-                        SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.remove("loggedInUser");
-                        editor.remove("loggedInPass");
-                        editor.apply();
-                    }
-                    Toast.makeText(dangNhap.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(dangNhap.this, quanlyphieumuon.class);
-                    startActivity(intent);
-                    finish();
+                if (adminDao.checkAdmin(user, pass)) {
+                    handleLoginSuccess(user,pass);
                 } else if (thuThuDAO.checkTT(user,pass)) {
-                    if (chkRemember.isChecked()){
-                        SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("loggedInUser", user); // Lưu tên đăng nhập
-                        editor.putString("loggedInPass", pass); // Lưu tên đăng nhập
-                        editor.apply();
-                    }
-                    else{
-                        SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.remove("loggedInUser");
-                        editor.remove("loggedInPass");
-                        editor.apply();
-                    }
-                    Toast.makeText(dangNhap.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(dangNhap.this, quanlyphieumuon.class);
-                    startActivity(intent);
-                    finish();
+                    handleLoginSuccess(user,pass);
 
                 } else {
                     Toast.makeText(dangNhap.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
@@ -126,6 +91,28 @@ public class dangNhap extends AppCompatActivity {
         chkRemember = findViewById(R.id.chkRemember);
         adminDao = new AdminDao(this);
         thuThuDAO = new ThuThuDAO(this);
+    }
+    private void handleLoginSuccess(String user,String pass){
+        // Lưu tên đăng nhập vào SharedPreferences khi đăng nhập thành công
+
+        if (chkRemember.isChecked()){
+            SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("loggedInUser", user); // Lưu tên đăng nhập
+            editor.putString("loggedInPass", pass); // Lưu tên đăng nhập
+            editor.apply();
+        }
+        else{
+            SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove("loggedInUser");
+            editor.remove("loggedInPass");
+            editor.apply();
+        }
+        Toast.makeText(dangNhap.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(dangNhap.this, quanlyphieumuon.class);
+        startActivity(intent);
+        finish();
     }
 
 }

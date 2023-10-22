@@ -167,7 +167,7 @@ public class quanlythanhvien extends AppCompatActivity {
                     String loggedInUser = sharedPreferences.getString("loggedInUser", "");
                     String loggedInPass = sharedPreferences.getString("loggedInPass", "");
 
-                    if (adminDao.checkUser(loggedInUser,loggedInPass)) {
+                    if (adminDao.checkAdmin(loggedInUser,loggedInPass)) {
                         // Người dùng có quyền admin
                         // Cho phép họ truy cập chức năng thêm thành viên
                         Intent intent = new Intent(quanlythanhvien.this, themthuthu.class);

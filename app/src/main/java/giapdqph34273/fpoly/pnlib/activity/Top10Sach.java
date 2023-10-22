@@ -38,11 +38,6 @@ public class Top10Sach extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private AdminDao adminDao;
 
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +47,7 @@ public class Top10Sach extends AppCompatActivity {
         setUpToolbar();
 
         phieumuonDAO = new PhieuMuonDAO(this);
-        list = (ArrayList<TopSach>) phieumuonDAO.getTop10Sach();
+        list = phieumuonDAO.getTop10Sach();
         topAdapter = new TopAdapter(Top10Sach.this, list);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -100,7 +95,7 @@ public class Top10Sach extends AppCompatActivity {
                     String loggedInUser = sharedPreferences.getString("loggedInUser", "");
                     String loggedInPass = sharedPreferences.getString("loggedInPass", "");
 
-                    if (adminDao.checkUser(loggedInUser,loggedInPass)) {
+                    if (adminDao.checkAdmin(loggedInUser,loggedInPass)) {
                         // Người dùng có quyền admin
                         // Cho phép họ truy cập chức năng thêm thành viên
                         Intent intent = new Intent(Top10Sach.this, themthuthu.class);

@@ -70,24 +70,10 @@ public class doiMatKhau extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     if (mkm.equals(nhaplai)) {
                         if (adminDao.checkPasswordAndChange(mkc, mkm)) {
-                            Toast.makeText(doiMatKhau.this, "Đổi thành công", Toast.LENGTH_SHORT).show();
-                            edtMkNew.setText("");
-                            edtMkOld.setText("");
-                            edtNhapLai.setText("");
-
-                            edtMkNew.setFocusable(false);
-                            edtMkOld.setFocusable(false);
-                            edtNhapLai.setFocusable(false);
+                            handlePasswordChange();
 
                         } else if (thuThuDAO.doiMKTT(mkc, mkm)) {
-                            Toast.makeText(doiMatKhau.this, "Đổi thành công", Toast.LENGTH_SHORT).show();
-                            edtMkNew.setText("");
-                            edtMkOld.setText("");
-                            edtNhapLai.setText("");
-
-                            edtMkNew.setFocusable(false);
-                            edtMkOld.setFocusable(false);
-                            edtNhapLai.setFocusable(false);
+                            handlePasswordChange();
                         } else {
                             Toast.makeText(doiMatKhau.this, "Mật khẩu cũ sai", Toast.LENGTH_SHORT).show();
                         }
@@ -107,6 +93,16 @@ public class doiMatKhau extends AppCompatActivity {
             builder.show();
         }
 
+    }
+    private void handlePasswordChange(){
+        Toast.makeText(doiMatKhau.this, "Đổi thành công", Toast.LENGTH_SHORT).show();
+        edtMkNew.setText("");
+        edtMkOld.setText("");
+        edtNhapLai.setText("");
+
+        edtMkNew.setFocusable(false);
+        edtMkOld.setFocusable(false);
+        edtNhapLai.setFocusable(false);
     }
 
     private void anhxa() {
@@ -163,7 +159,7 @@ public class doiMatKhau extends AppCompatActivity {
                     String loggedInUser = sharedPreferences.getString("loggedInUser", "");
                     String loggedInPass = sharedPreferences.getString("loggedInPass", "");
 
-                    if (adminDao.checkUser(loggedInUser,loggedInPass)) {
+                    if (adminDao.checkAdmin(loggedInUser,loggedInPass)) {
                         // Người dùng có quyền admin
                         // Cho phép họ truy cập chức năng thêm thành viên
                         Intent intent = new Intent(doiMatKhau.this, themthuthu.class);
