@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "pnlibdata.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -46,7 +46,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "TENSACH TEXT," +
                 "TIENTHUE INTEGER," +
                 "NGAYTHUE TEXT," +
-                "TRANGTHAI INTEGER)";
+                "TRANGTHAI INTEGER," +
+                "AN INTEGER)";
         db.execSQL(createTablePM);
 //        String pms = "INSERT INTO PM (TENTV, TENSACH, TIENTHUE,NGAYTHUE,TRANGTHAI) VALUES" +
 //                "('Nguyễn Tuấn Phong','Photoshop',3000,'2023-01-10',1)";

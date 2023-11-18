@@ -37,11 +37,14 @@ import giapdqph34273.fpoly.pnlib.model.ThanhVien;
 public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.PhieuMuonViewHolder> {
     private Context context;
     ArrayList<PhieuMuon> list;
+    ArrayList<PhieuMuon> moi;
+
     PhieuMuonDAO phieuMuonDAO;
 
     public PhieuMuonAdapter(Context context, ArrayList<PhieuMuon> list) {
         this.context = context;
         this.list = list;
+        moi = danhSachHien();
         phieuMuonDAO = new PhieuMuonDAO(context);
     }
 
@@ -55,18 +58,24 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
 
     @Override
     public void onBindViewHolder(@NonNull PhieuMuonViewHolder holder, int position) {
-        PhieuMuon phieuMuon = list.get(position);
-        holder.txtTenTV.setText(phieuMuon.getTenTV());
-        holder.txtNgay.setText(phieuMuon.getNgayThue());
-        holder.txtTenSach.setText(phieuMuon.getTenSach());
-        holder.txtTienThue.setText(String.valueOf(phieuMuon.getTienThue()));
-        if (phieuMuon.getTrangThaiMuon()==1){
-            holder.txtTrangThai.setText("Đã trả sách");
-            holder.txtTrangThai.setTextColor(Color.parseColor("#1D0FC6"));
-        }else{
-            holder.txtTrangThai.setText("Chưa trả sách");
-            holder.txtTrangThai.setTextColor(Color.parseColor("#ED0C0C"));
+        PhieuMuon phieuMuon = moi.get(position);
+
+        if (phieuMuon.getIsHidden() == 0) {
+            holder.txtTenTV.setText(phieuMuon.getTenTV());
+            holder.txtNgay.setText(phieuMuon.getNgayThue());
+            holder.txtTenSach.setText(phieuMuon.getTenSach());
+            holder.txtTienThue.setText(String.valueOf(phieuMuon.getTienThue()));
+            if (phieuMuon.getTrangThaiMuon() == 1) {
+                holder.txtTrangThai.setText("Đã trả sách");
+                holder.txtTrangThai.setTextColor(Color.parseColor("#1D0FC6"));
+            } else {
+                holder.txtTrangThai.setText("Chưa trả sách");
+                holder.txtTrangThai.setTextColor(Color.parseColor("#ED0C0C"));
+            }
+        } else {
+            holder.itemView.setVisibility(View.GONE);
         }
+
 
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,14 +89,26 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // bắt sự kiện nhấn nút Yes
-                        if (phieuMuonDAO.deletePM(phieuMuon.getId()) > 0) {
-                            list.clear();
-                            list.addAll(phieuMuonDAO.getAllPhieuMuon());
+//                        if (phieuMuonDAO.deletePM(phieuMuon.getId()) > 0) {
+//                            list.clear();
+//                            list.addAll(phieuMuonDAO.getAllPhieuMuon());
+//                            Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+//                            notifyDataSetChanged();
+//                        } else {
+//                            Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+//                        }
+
+                        phieuMuon.setIsHidden(1);
+                        if (phieuMuonDAO.updatePM(phieuMuon) > 0){
+                            moi.clear();
+                            list.remove(position);
+                            moi.addAll(danhSachHien());
                             Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
                             notifyDataSetChanged();
-                        } else {
-                            Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
                         }
+
+
+
                     }
                 });
                 builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -119,7 +140,7 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Spinner edtTenSach,edtTenTV;
+        Spinner edtTenSach, edtTenTV;
         TextView txtNgayThue, txtTienThue;
         CheckBox chkTrangThai;
         Button btnSua, btnHuy;
@@ -151,27 +172,28 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
                 String tenTV = edtTenTV.getSelectedItem().toString();
                 String tenSach = edtTenSach.getSelectedItem().toString();
 
-                if (chkTrangThai.isChecked()){
+                if (chkTrangThai.isChecked()) {
                     phieuMuon.setTrangThaiMuon(1);
-                }else{
+                } else {
                     phieuMuon.setTrangThaiMuon(0);
                 }
 
-                if(tenTV.isEmpty()||tenSach.isEmpty()){
+                if (tenTV.isEmpty() || tenSach.isEmpty()) {
                     Toast.makeText(context, "Không được để trống", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 phieuMuon.setTenTV(tenTV);
                 phieuMuon.setTenSach(tenSach);
+                phieuMuon.setIsHidden(0);
 
-                if (phieuMuonDAO.updatePM(phieuMuon)>0){
-                    list.clear();
-                    list.addAll(phieuMuonDAO.getAllPhieuMuon());
+                if (phieuMuonDAO.updatePM(phieuMuon) > 0) {
+                    moi.clear();
+                    moi.addAll(danhSachHien());
                     notifyDataSetChanged();
                     dialog.dismiss();
                     Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(context, "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -183,22 +205,34 @@ public class PhieuMuonAdapter extends RecyclerView.Adapter<PhieuMuonAdapter.Phie
             }
         });
     }
+
+    private ArrayList<PhieuMuon> danhSachHien() {
+        ArrayList<PhieuMuon> dsMoi = new ArrayList<>();
+        for (PhieuMuon p : list) {
+            if (p.getIsHidden() == 0) {
+                dsMoi.add(p);
+            }
+        }
+        return dsMoi;
+    }
+
     private ArrayList<String> getTenSachList() {
         SachDAO sachDAO = new SachDAO(context);
         ArrayList<Sach> list1 = sachDAO.getAllSach();
         ArrayList<String> tenSachList = new ArrayList<>();
 
-        for (Sach sach: list1){
+        for (Sach sach : list1) {
             tenSachList.add(sach.getTenSach());
         }
         return tenSachList;
     }
+
     private ArrayList<String> getTenThanhVienList() {
         ThanhVienDAO thanhVienDAO = new ThanhVienDAO(context);
         ArrayList<ThanhVien> list1 = thanhVienDAO.getAllThanhVien();
         ArrayList<String> tenThanhVienList = new ArrayList<>();
 
-        for (ThanhVien thanhVien: list1){
+        for (ThanhVien thanhVien : list1) {
             tenThanhVienList.add(thanhVien.getTenTV());
         }
         return tenThanhVienList;

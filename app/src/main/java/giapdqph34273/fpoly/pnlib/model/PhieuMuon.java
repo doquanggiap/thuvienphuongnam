@@ -7,6 +7,7 @@ public class PhieuMuon {
     private int tienThue;
     private String ngayThue;
     private int trangThaiMuon;
+    private int isHidden;
 
     public PhieuMuon(String tenTV, String tenSach, int tienThue, String ngayThue, int trangThaiMuon) {
         this.tenTV = tenTV;
@@ -14,6 +15,24 @@ public class PhieuMuon {
         this.tienThue = tienThue;
         this.ngayThue = ngayThue;
         this.trangThaiMuon = trangThaiMuon;
+    }
+
+    public PhieuMuon(String tenTV, String tenSach, int tienThue, String ngayThue, int trangThaiMuon, int isHidden) {
+        this.tenTV = tenTV;
+        this.tenSach = tenSach;
+        this.tienThue = tienThue;
+        this.ngayThue = ngayThue;
+        this.trangThaiMuon = trangThaiMuon;
+        this.isHidden = isHidden;
+    }
+
+    public int getIsHidden() {
+        return isHidden;
+    }
+
+
+    public void setIsHidden(int isHidden) {
+        this.isHidden = isHidden;
     }
 
     public PhieuMuon() {

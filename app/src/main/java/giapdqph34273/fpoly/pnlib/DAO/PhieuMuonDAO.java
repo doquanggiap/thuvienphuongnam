@@ -30,7 +30,8 @@ public class PhieuMuonDAO {
                     cursor.getString(2),
                     cursor.getInt(3),
                     cursor.getString(4),
-                    cursor.getInt(5)
+                    cursor.getInt(5),
+                    cursor.getInt(6)
             );
             pm.setId(cursor.getInt(0));
             list.add(pm);
@@ -46,12 +47,28 @@ public class PhieuMuonDAO {
         values.put("TIENTHUE", pm.getTienThue());
         values.put("NGAYTHUE", pm.getNgayThue());
         values.put("TRANGTHAI", pm.getTrangThaiMuon());
+        values.put("AN", pm.getIsHidden());
+
         return database.insert("PM", null, values);
     }
 
-    public long deletePM(int id) {
+//    public long deletePM(int id) {
+//        database = dbHelper.getWritableDatabase();
+//        long check = database.delete("PM", "ID=?", new String[]{String.valueOf(id)});
+//        return check;
+//    }
+
+    public long deletePM(PhieuMuon pm) {
         database = dbHelper.getWritableDatabase();
-        long check = database.delete("PM", "ID=?", new String[]{String.valueOf(id)});
+        ContentValues values = new ContentValues();
+        values.put("TENTV", pm.getTenTV());
+        values.put("TENSACH", pm.getTenSach());
+        values.put("TIENTHUE", pm.getTienThue());
+        values.put("NGAYTHUE", pm.getNgayThue());
+        values.put("TRANGTHAI", pm.getTrangThaiMuon());
+        values.put("AN", pm.getIsHidden());
+
+        long check = database.update("PM", values, "ID=?", new String[]{String.valueOf(pm.getId())});
         return check;
     }
 
@@ -63,6 +80,8 @@ public class PhieuMuonDAO {
         values.put("TIENTHUE", pm.getTienThue());
         values.put("NGAYTHUE", pm.getNgayThue());
         values.put("TRANGTHAI", pm.getTrangThaiMuon());
+        values.put("AN", pm.getIsHidden());
+
         long check = database.update("PM", values, "ID=?", new String[]{String.valueOf(pm.getId())});
         return check;
     }

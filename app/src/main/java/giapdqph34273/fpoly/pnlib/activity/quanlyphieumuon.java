@@ -48,7 +48,7 @@ public class quanlyphieumuon extends AppCompatActivity {
     ImageButton btnThem;
     DrawerLayout drawerLayout;
     PhieuMuonDAO phieuMuonDAO;
-    ArrayList<PhieuMuon> list;
+    ArrayList<PhieuMuon> list = new ArrayList<>();
     PhieuMuonAdapter phieuMuonAdapter;
     AdminDao adminDao;
 
@@ -62,7 +62,11 @@ public class quanlyphieumuon extends AppCompatActivity {
         setUpToolbar();
 
         phieuMuonDAO = new PhieuMuonDAO(this);
-        list = phieuMuonDAO.getAllPhieuMuon();
+        list = danhSachHien();
+//        list.add(new PhieuMuon("Nguyễn Tuấn Phong","Photoshop",3000,"2023-01-10",1,0));
+//        list.add(new PhieuMuon("Nguyễn Tuấn Phong","Photoshop",3000,"2023-01-10",1,0));
+//        list.add(new PhieuMuon("Nguyễn Tuấn Pho","Photoshop",3000,"2023-01-10",0,0));
+
         phieuMuonAdapter = new PhieuMuonAdapter(this, list);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -158,10 +162,11 @@ public class quanlyphieumuon extends AppCompatActivity {
                 } else {
                     pm.setTrangThaiMuon(0);
                 }
+                pm.setIsHidden(0);
                 if (phieuMuonDAO.addPM(pm) > 0) {
                     Toast.makeText(quanlyphieumuon.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                     list.clear();//xóa tất cả các phần tử trong danh sách list
-                    list.addAll(phieuMuonDAO.getAllPhieuMuon());//thêm tất cả các phần tử của danh sách sản phẩm được lấy từ cơ sở dữ liệu vào danh sách list.
+                    list.addAll(danhSachHien());//thêm tất cả các phần tử của danh sách sản phẩm được lấy từ cơ sở dữ liệu vào danh sách list.
                     phieuMuonAdapter.notifyDataSetChanged();
                     dialog.dismiss();
                 } else {
@@ -178,6 +183,17 @@ public class quanlyphieumuon extends AppCompatActivity {
             }
         });
 
+    }
+
+    private ArrayList<PhieuMuon> danhSachHien() {
+        ArrayList<PhieuMuon> dsCu = phieuMuonDAO.getAllPhieuMuon();
+        ArrayList<PhieuMuon> dsMoi = new ArrayList<>();
+        for (PhieuMuon p : dsCu) {
+            if (p.getIsHidden() == 0) {
+                dsMoi.add(p);
+            }
+        }
+        return dsMoi;
     }
 
     private ArrayList<Integer> getGiaTienThueList() { // lấy danh sách tiền thuê của tất cả sách
